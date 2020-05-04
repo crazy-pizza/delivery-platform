@@ -1,0 +1,33 @@
+spring:
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/vote?serverTimeZone=Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+server:
+  port: 7000
+  tomcat:
+    uri-encoding: UTF-8
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 17000
+    servlet:
+      context-path: /
+
+
+logging:
+  level:
+    com.delivery.mapper: DEBUG
+
