@@ -1,0 +1,132 @@
+.login-container{
+    height: 100%;
+}
+.login-background{
+    background: url(../../asset/img/login-background.png);
+    background-size: cover;
+    height: 100%;
+}
+.login-banner{
+    background: #1ab495;
+    width: 550px;
+    height: 459px;
+    position: absolute;
+    background: url(../../asset/img/login-banner.png);
+    background-size: cover;
+    top: 52vh;
+    transform: translateY(-50%);
+    right: 50%;
+}
+
+@media screen and (max-width: 1600px) {
+    .login-banner {
+        width: 550px;
+        height: 459px;
+    }
+}
+
+@media screen and (max-width: 1450px) {
+    .login-banner {
+        width: 500px;
+        height: 417px;
+    }
+}
+@media screen and (max-width: 1250px) {
+    .login-banner {
+        width: 450px;
+        height: 376px;
+    }
+}
+@media screen and (max-width: 950px) {
+    .login-banner {
+        display: none;
+    }
+}
+
+.login-section{
+    width: 380px;
+    height: 380px;
+    position: absolute;
+    top: 50vh;
+    right: 12%;
+    transform: translateY(-50%);
+    z-index: 9;
+    padding: 12px 30px;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,.95);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+}
+.login-section li {
+    margin-bottom: 12px;
+}
+.login-err{
+    margin: 10px 0;
+    overflow: auto;
+}
+/* .login.ant-alert-message {
+    color: #e5853a;
+} */
+.login-title{
+    text-align: center;
+    color: #787878;
+    font-weight: 400;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.login-captcha{
+    display: flex;
+    justify-content: space-between;
+}
+.login-captcha > input {
+    width: 190px;
+}
+.login-captcha > img {
+    width: 112px;
+    height: 40px;
+}
+.login-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 30px;
+    background-color: #f4fdfc;
+    border-top: 1px solid #ddf2ef;
+}
+.login-input{
+    border-radius: 5px;
+    height: 42px;
+    font-size: 14px;
+    border: 1px solid #eee;
+    color: #787878;
+    outline: 0;
+}
+.AccSubmit{
+    line-height: 40px;
+    display: block;
+    background: #1ab495;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+}
+.AccSubmit:hover{
+    color: #fff;
+}
+.AccSubmit:before{
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: -80px;
+    height: 80px;
+    width: 80px;
+    background: rgba(255,255,255,.4);
+    transition: all .2s linear;
+    transform: skewX(30deg) translateX(0);
+}
+.AccSubmit:hover:before{
+    transform: skewX(30deg) translateX(420px);
+}

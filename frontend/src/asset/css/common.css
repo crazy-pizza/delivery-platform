@@ -1,0 +1,138 @@
+h1 {
+  font-size: 20px;
+}
+h5 {
+  font-size: 12px;
+}
+.tc{
+  text-align: center;
+}
+.text{
+  color: #333;
+}
+.text-red{
+  color: #bf4346 !important;
+}
+.ml5{
+  margin-left: 5px;
+}
+.ml8{
+  margin-left: 8px;
+}
+.ml10{
+  margin-left: 10px;
+}
+.ml20{
+  margin-left: 20px;
+}
+.mr5{
+  margin-right: 5px;
+}
+.mr8{
+  margin-right: 8px;
+}
+.mr10{
+  margin-right: 10px;
+}
+.mt20{
+  margin-top: 20px;
+}
+.fs-15{
+  font-size: 15px;
+}
+
+.borderleft{
+  border-left: 1px solid #ddd;
+  padding-left: 20px;
+}
+
+span.item-required:before{
+  display: inline-block;
+  margin-right: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: '*';
+}
+
+/* layout样式开始 */
+.layoutsContainer{
+  
+}
+.layoutsHeader{
+  padding: 0 20px;
+}
+.layoutsTool{
+  height: 52px;
+  line-height: 52px;
+  overflow: hidden;
+}
+.layoutsTool .layoutsToolLeft{
+  float: left;
+}
+.layoutsTool .layoutsToolLeft h1{
+  float: left;
+  font-size: 20px;
+  font-weight: 500;
+  color: #676a6c;
+}
+.layoutsTool .layoutsToolRight{
+  float: right;
+}
+.layoutsLine{
+  height: 1px;
+  overflow: hidden;
+  background: #F3F3F3;
+  margin-bottom: 10px;
+}
+.layoutsLineBlock{
+  height: 15px;
+  background: #F3F3F3;
+}
+.layoutsContent{
+  padding: 20px;
+}
+.layoutsSearch{
+  padding-bottom: 10px;
+}
+/* layout样式结束 */
+
+
+/* Table组件中单元格是Select组件时样式 开始 */
+.tableTdSelectInput {
+  padding: 0 !important;
+}
+.tableTdSelectInput div.ant-select{
+  width: 100%;
+}
+.tableTdSelectInput div.ant-select .ant-select-selector{
+  border: none;
+}
+/* Table组件中单元格是Select组件时样式 结束 */
+
+/* flex相关 开始 */
+.flexNoWrap{
+  flex-wrap: nowrap;
+}
+/* flex相关 结束 */
+
+/* table操作 button 开始 */
+.link-button {
+  color: #1890ff;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  /* text-decoration: underline; */
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.link-button:hover,
+.link-button:focus {
+  text-decoration: none;
+  color: #2365aa;
+}
+/* table操作 button 结束 */

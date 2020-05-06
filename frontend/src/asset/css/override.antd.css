@@ -1,0 +1,54 @@
+:root{
+    --btn_primary: #379ff1;
+    --btn_primary_border: #379ff1;
+    --btn_primary_hover: #3496e0;
+    --btn_primary_hover_border: #379ff1;
+    /* --ant_tabs_tab_active: #d0121b; */
+}
+
+body{
+    font-family: Microsoft YaHei;
+}
+a{
+    color: #1ca1dc;
+}
+.ant-table{
+    font-size: 13px;
+}
+.ant-layout{
+    background: #fff;
+}
+.ant-layout-header{
+    background: #f8f8f9;
+    padding-left: 10px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.userContainer .ant-menu.ant-menu-dark .ant-menu-item-selected{
+    background-color: #001429;
+}
+.ant-menu-submenu-popup > .ant-menu{
+    background-color: #001529;
+}
+.ant-table-container .ant-table-thead > tr > th{
+    text-align: center;
+}
+
+.ant-btn-primary{
+    background-color: var(--btn_primary);
+    border-color: var(--btn_primary_border);
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus{
+    background-color: var(--btn_primary_hover);
+    border-color: var(--btn_primary_hover_border);
+}
+.ant-alert-message {
+    color: #e5853a;
+}
+/* 
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active{
+    color: var(--ant_tabs_tab_active)
+} */

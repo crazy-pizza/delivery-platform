@@ -1,0 +1,21 @@
+.list-prefix{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.list-prefix:before{
+    content: '';
+    display: inline-block;
+    height: 14px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: #1890ff;
+    /* vertical-align: middle; */
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.rowSelectedBg {
+    background: #ecf6fd;
+}
+

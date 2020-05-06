@@ -1,0 +1,1 @@
+export const LEFT_TREE_WIDTH = '330px'

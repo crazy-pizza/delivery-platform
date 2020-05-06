@@ -1,0 +1,8 @@
+.treeTitle {
+    height: 36px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.85);
+    text-indent: 10px;
+    border-bottom: inherit;
+    background: #F3F3F3;
+}
