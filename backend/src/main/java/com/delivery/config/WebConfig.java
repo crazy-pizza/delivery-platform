@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
 
@@ -17,7 +17,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(passportInterceptor).excludePathPatterns("/user/login").excludePathPatterns("/user/add");
+        registry.addInterceptor(passportInterceptor)
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/add")
+                .excludePathPatterns("/swagger-resources")
+                .excludePathPatterns("/v2/api-docs")
+                .excludePathPatterns("/v2/api-docs-ext")
+                .excludePathPatterns("/doc.html")
+                .excludePathPatterns("/webjars/**");
 
     }
 
