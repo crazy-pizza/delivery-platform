@@ -3,11 +3,15 @@ package com.delivery.bean;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
+@ApiModel("订单")
 @TableName("order")
 public class Order extends Page {
 
@@ -31,13 +35,11 @@ public class Order extends Page {
     @ApiModelProperty("订单备注")
     private String remark;
 
-    @TableField("foodID")
-    @ApiModelProperty("菜品ID")
-    private Long foodID;
+    @TableField("merchantID")
+    @ApiModelProperty("商家ID")
+    private Long merchantID;
 
-    @TableField("foodName")
-    @ApiModelProperty("菜品名称")
-    private String foodName;
-
-
+    @ApiModelProperty("订单明细")
+    @TableField(exist = false)
+    private List<OrderDetail> detailList;
 }

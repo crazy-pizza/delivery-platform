@@ -32,7 +32,7 @@ public class FoodController {
     @PostMapping("/add")
     public Result add(@RequestBody Food food) {
         User user = UserHolder.getUser();
-        food.setUserID(user.getUserID());
+        food.setMerchant(user.getUserID());
         foodService.save(food);
         return Result.success();
     }

@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Order;
+import com.delivery.bean.OrderDetail;
 import com.delivery.bean.User;
 import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
+import com.delivery.service.OrderDetailService;
 import com.delivery.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,6 +33,9 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
     private Snowflake snowflake;
 
     @ApiOperation("用户下单")
@@ -40,7 +46,7 @@ public class OrderController {
         order.setOrderNo(String.valueOf(orderNo));
         order.setOrderStatus(1);
         order.setUserID(user.getUserID());
-        orderService.save(order);
+        orderService.addOrder(order);
         return Result.success();
     }
 
@@ -56,23 +62,27 @@ public class OrderController {
 
     @ApiOperation("我的订单")
     @PostMapping("/historyOrder")
-    public Result historyOrder(@RequestBody Order order) {
+    public Result<IPage<Order>> historyOrder(@RequestBody Order order) {
         User user = UserHolder.getUser();
         Page<Order> page = new Page<>(order.getPageNo(), order.getPageSize());
         LambdaQueryWrapper<Order> query = new LambdaQueryWrapper<>();
         query.eq(Order::getUserID, user.getUserID());
         Optional.ofNullable(order.getOrderNo()).ifPresent(orderNo -> query.eq(Order::getOrderNo, orderNo));
         Optional.ofNullable(order.getOrderStatus()).ifPresent(orderStatus -> query.eq(Order::getOrderStatus, orderStatus));
-        Optional.ofNullable(order.getFoodID()).ifPresent(foodID -> query.eq(Order::getFoodID, foodID));
-        Optional.ofNullable(order.getFoodName()).ifPresent(foodName -> query.eq(Order::getFoodName, foodName));
         IPage<Order> pageList = orderService.page(page, query);
         return Result.success(pageList);
-
     }
 
 
-
-
+    @ApiOperation("查看订单详情")
+    @PostMapping("/showDetail")
+    public Result<List<OrderDetail>> showDetail(@RequestBody Order order) {
+        Assert.notNull(order.getOrderID());
+        LambdaQueryWrapper<OrderDetail> query = new LambdaQueryWrapper<>();
+        query.eq(OrderDetail::getOrderID, order.getOrderID());
+        List<OrderDetail> list = orderDetailService.list(query);
+        return Result.success(list);
+    }
 
 
 }

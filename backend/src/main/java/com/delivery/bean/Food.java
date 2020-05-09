@@ -17,7 +17,7 @@ public class Food extends Page {
 
 
     @ApiModelProperty("菜品ID")
-    @TableId(value = "foodID", type = IdType.ID_WORKER)
+    @TableId("foodID")
     private Long foodID;
 
     @ApiModelProperty("菜品名称")
@@ -39,7 +39,7 @@ public class Food extends Page {
     @ApiModelProperty("菜品库存")
     private BigDecimal balance;
 
-    @TableField("userID")
+    @TableField("merchantID")
     @ApiModelProperty("商家ID")
-    private Long userID;
+    private Long merchant;
 }
