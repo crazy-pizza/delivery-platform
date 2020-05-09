@@ -1,8 +1,8 @@
 package com.delivery.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.delivery.bean.User;
-import com.delivery.mapper.UserMapper;
+import com.delivery.bean.Food;
+import com.delivery.mapper.FoodMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  * @desc
  */
 @Service
-public class UserService extends ServiceImpl<UserMapper, User> {
+public class FoodService extends ServiceImpl<FoodMapper, Food> {
 }

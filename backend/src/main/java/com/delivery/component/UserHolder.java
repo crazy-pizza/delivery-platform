@@ -1,7 +1,7 @@
 package com.delivery.component;
 
 
-import com.delivery.bean.user.User;
+import com.delivery.bean.User;
 
 /**
  * @author YuanChong

@@ -4,10 +4,10 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
-import com.delivery.bean.user.User;
+import com.delivery.bean.User;
 import com.delivery.common.Constant;
 import com.delivery.common.Result;
+import com.delivery.component.UserHolder;
 import com.delivery.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,8 +46,9 @@ public class UserController {
 
     @ApiOperation("删除用户")
     @PostMapping("/delete")
-    public Result delete(Long userID) {
-        userService.removeById(userID);
+    public Result delete(@RequestBody User user) {
+        Assert.notNull(user.getUserID());
+        userService.removeById(user.getUserID());
         return Result.success();
     }
 
@@ -76,7 +77,7 @@ public class UserController {
 
     @ApiOperation("登陆")
     @PostMapping("/login")
-    public Result login(@Valid @RequestBody User user, @ApiIgnore HttpSession session) {
+    public Result<User> login(@Valid @RequestBody User user, @ApiIgnore HttpSession session) {
         Assert.notNull(user.getUserName());
         Assert.notNull(user.getPassword());
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
@@ -85,7 +86,7 @@ public class UserController {
         User one = userService.getOne(query);
         Assert.notNull(one,"用户名或密码错误");
         session.setAttribute(Constant.ACCESS_TOKEN, one);
-        return Result.success();
+        return Result.success(one);
     }
 
 
@@ -99,8 +100,8 @@ public class UserController {
 
     @ApiOperation("检查登录状态")
     @PostMapping("/checkStatus")
-    public Result checkStatus() {
-        return Result.success();
+    public Result<User> checkStatus() {
+        return Result.success(UserHolder.getUser());
     }
 
 

@@ -1,7 +1,7 @@
 package com.delivery.component;
 
 import com.alibaba.fastjson.JSON;
-import com.delivery.bean.user.User;
+import com.delivery.bean.User;
 import com.delivery.common.Constant;
 import com.delivery.common.Result;
 import com.delivery.common.ResultEnum;

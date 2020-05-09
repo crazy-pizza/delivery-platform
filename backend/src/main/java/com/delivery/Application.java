@@ -2,6 +2,7 @@ package com.delivery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author YuanChong
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @desc
  */
 @SpringBootApplication
+@EnableTransactionManagement(proxyTargetClass = true)
 public class Application {
 
     public static void main(String[] args) {

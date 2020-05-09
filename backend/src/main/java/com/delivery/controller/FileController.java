@@ -19,7 +19,7 @@ import java.io.IOException;
 
 
 @RestController
-@Api(tags = "文件")
+@Api(tags = "文件管理")
 @RequestMapping("/file")
 public class FileController {
 
