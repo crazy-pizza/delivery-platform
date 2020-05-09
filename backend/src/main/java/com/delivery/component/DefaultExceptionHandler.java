@@ -25,7 +25,7 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Object errorHandler(Exception ex) {
         log.error("全局异常捕捉处理",ex);
-        return ex.getStackTrace()[0].getClass().equals(Assert.class) ?
+        return ex.getStackTrace()[0].getClassName().equals(Assert.class.getName()) ?
                 Result.error(ex.getMessage()) : Result.handle(ResultEnum.SYSTEM_ERROR);
     }
 

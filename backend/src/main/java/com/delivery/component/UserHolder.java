@@ -1,7 +1,7 @@
 package com.delivery.component;
 
 
-import com.delivery.bean.user.UserDto;
+import com.delivery.bean.user.User;
 
 /**
  * @author YuanChong
@@ -9,14 +9,14 @@ import com.delivery.bean.user.UserDto;
  * @desc
  */
 public class UserHolder {
-    private static ThreadLocal<UserDto> currentUser = new ThreadLocal();
+    private static ThreadLocal<User> currentUser = new ThreadLocal();
 
 
-    public static UserDto getUser() {
+    public static User getUser() {
         return currentUser.get();
     }
 
-    public static void setUser(UserDto user) {
+    public static void setUser(User user) {
         currentUser.set(user);
     }
 

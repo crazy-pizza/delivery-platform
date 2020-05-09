@@ -1,1 +1,0 @@
-package com.delivery.bean.user;import io.swagger.annotations.ApiModel;import io.swagger.annotations.ApiModelProperty;import lombok.Data;@Data@ApiModel("用户")public class UserDto {	@ApiModelProperty("用户ID")	private Long userID;	@ApiModelProperty("用户名")	private String userName;	@ApiModelProperty("密码")	private String password;}

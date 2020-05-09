@@ -1,7 +1,7 @@
 package com.delivery.component;
 
 import com.alibaba.fastjson.JSON;
-import com.delivery.bean.user.UserDto;
+import com.delivery.bean.user.User;
 import com.delivery.common.Constant;
 import com.delivery.common.Result;
 import com.delivery.common.ResultEnum;
@@ -20,7 +20,7 @@ public class PassportInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         if(request.getSession() != null && request.getSession().getAttribute(Constant.ACCESS_TOKEN) != null) {
-            UserDto user = (UserDto)request.getSession().getAttribute(Constant.ACCESS_TOKEN);
+            User user = (User)request.getSession().getAttribute(Constant.ACCESS_TOKEN);
             UserHolder.setUser(user);
             return true;
         }
