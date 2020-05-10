@@ -1,12 +1,12 @@
 package com.delivery.controller;
 
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.lang.Snowflake;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Order;
 import com.delivery.bean.OrderDetail;
+import com.delivery.bean.OrderReport;
 import com.delivery.bean.User;
 import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
@@ -58,22 +58,22 @@ public class OrderController {
     public synchronized Result affirm(@RequestBody Order order) {
         Assert.notNull(order.getOrderID());
         Order entry = orderService.getById(order.getOrderID());
-        Preconditions.checkArgument(order.getOrderStatus() == 2 ,"订单状态不符");
+        Preconditions.checkArgument(entry.getOrderStatus() == 2 ,"订单状态不符");
         entry.setOrderStatus(3);
         orderService.updateById(entry);
         return Result.success();
     }
 
 
-    @ApiOperation("我的订单")
-    @PostMapping("/historyOrder")
-    public Result<IPage<Order>> historyOrder(@RequestBody Order order) {
-        User user = UserHolder.getUser();
+    @ApiOperation("订单列表")
+    @PostMapping("/orderList")
+    public Result<IPage<Order>> orderList(@RequestBody Order order) {
         Page<Order> page = new Page<>(order.getPageNo(), order.getPageSize());
-        LambdaQueryWrapper<Order> query = new LambdaQueryWrapper<>();
-        query.eq(Order::getUserID, user.getUserID());
+        LambdaQueryWrapper<Order> query = new LambdaQueryWrapper<Order>().orderByDesc(Order::getCreateTime);
         Optional.ofNullable(order.getOrderNo()).ifPresent(orderNo -> query.eq(Order::getOrderNo, orderNo));
         Optional.ofNullable(order.getOrderStatus()).ifPresent(orderStatus -> query.eq(Order::getOrderStatus, orderStatus));
+        Optional.ofNullable(order.getUserID()).ifPresent(userID -> query.eq(Order::getUserID, userID));
+        Optional.ofNullable(order.getMerchantID()).ifPresent(merchantID -> query.eq(Order::getMerchantID, merchantID));
         IPage<Order> pageList = orderService.page(page, query);
         return Result.success(pageList);
     }
@@ -89,5 +89,14 @@ public class OrderController {
         return Result.success(list);
     }
 
+
+    @ApiOperation("订单报表")
+    @PostMapping("/report")
+    public Result<List<OrderReport>> report(@RequestBody OrderReport orderReport) {
+        Assert.notNull(orderReport.getMerchantID());
+        Assert.notNull(orderReport.getTimeDigit());
+        List<OrderReport> list = orderService.report(orderReport);
+        return Result.success(list);
+    }
 
 }

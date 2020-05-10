@@ -1,5 +1,7 @@
 package com.delivery.config;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import org.springframework.context.annotation.Bean;
@@ -20,5 +22,10 @@ public class MybatisPlusConfig {
         // 开启 count 的 join 优化,只针对部分 left join
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
         return paginationInterceptor;
+    }
+
+    @Bean
+    public MybatisPlusPropertiesCustomizer plusPropertiesCustomizer() {
+        return plusProperties -> plusProperties.getGlobalConfig().getDbConfig().setIdType(IdType.AUTO);
     }
 }
