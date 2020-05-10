@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.User;
 import com.delivery.common.Constant;
 import com.delivery.common.Result;
+import com.delivery.component.UserHolder;
 import com.delivery.service.UserService;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.Api;
@@ -102,7 +103,8 @@ public class UserController {
     @ApiOperation("检查登录状态")
     @PostMapping("/checkStatus")
     public Result<User> checkStatus() {
-        return Result.success();
+        User user = UserHolder.getUser();
+        return Result.success(user);
     }
 
 

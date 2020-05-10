@@ -62,6 +62,7 @@ public class FoodController {
         LambdaQueryWrapper<Food> query = new LambdaQueryWrapper<Food>();
         Optional.ofNullable(food.getFoodName()).ifPresent(foodName -> query.eq(Food::getFoodName, foodName));
         Optional.ofNullable(food.getFoodID()).ifPresent(foodID -> query.eq(Food::getFoodID, foodID));
+        Optional.ofNullable(food.getMerchantID()).ifPresent(merchantID -> query.eq(Food::getMerchantID, merchantID));
         IPage<Food> pageList = foodService.page(page, query);
         return Result.success(pageList);
     }

@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.UUID;
 import com.delivery.common.Result;
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,12 @@ public class FileController {
     @PostMapping("/upload")
     public Result<String> upload(@ApiIgnore MultipartFile file) throws IOException {
         String usrHome = System.getProperty("user.home");
+        File dir = new File(usrHome + "/images");
+        if(!dir.exists()) {
+            dir.mkdir();
+        }
         String fileName = UUID.fastUUID().toString();
-        FileUtil.writeFromStream(file.getInputStream(), new File(usrHome + "/" + fileName));
+        FileUtil.writeFromStream(file.getInputStream(), new File(usrHome + "/images/" + fileName));
         return Result.success(fileName);
     }
 
@@ -39,7 +44,7 @@ public class FileController {
     @GetMapping("/download")
     public void download(String fileName, @ApiIgnore HttpServletResponse response) throws IOException {
         String usrHome = System.getProperty("user.home");
-        File file = new File(usrHome + "/" + fileName);
+        File file = new File(usrHome + "/images/" + fileName);
         FileInputStream inputStream = new FileInputStream(file);
         IoUtil.copy(inputStream, response.getOutputStream());
         inputStream.close();
