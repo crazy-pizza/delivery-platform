@@ -58,6 +58,7 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         order.setOrderStatus(1);
         order.setUserID(user.getUserID());
         order.setTotalAmount(totalAmount);
+        order.setMerchantID(foodList.get(0).getMerchantID());
         baseMapper.insert(order);
         for(OrderDetail detail : order.getDetailList()) {
             detail.setOrderID(order.getOrderID());

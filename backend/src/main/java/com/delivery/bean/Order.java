@@ -22,7 +22,7 @@ public class Order extends Page {
     private Long orderID;
 
     @TableField("orderNo")
-    @ApiModelProperty("订货号")
+    @ApiModelProperty("订单号")
     private String orderNo;
 
     @TableField("orderStatus")
