@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @ApiModel("订单")
-@TableName("order")
+@TableName("`order`")
 public class Order extends Page {
 
 

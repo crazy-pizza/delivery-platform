@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.User;
 import com.delivery.common.Constant;
 import com.delivery.common.Result;
-import com.delivery.component.UserHolder;
 import com.delivery.service.UserService;
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -85,6 +85,7 @@ public class UserController {
                 .eq(User::getUserName, user.getUserName()).eq(User::getPassword, user.getPassword());
         User one = userService.getOne(query);
         Assert.notNull(one,"用户名或密码错误");
+        Preconditions.checkArgument(one.getIsActive() == 1, "账户已被封停，请联系管理员解封");
         session.setAttribute(Constant.ACCESS_TOKEN, one);
         return Result.success(one);
     }
@@ -101,7 +102,7 @@ public class UserController {
     @ApiOperation("检查登录状态")
     @PostMapping("/checkStatus")
     public Result<User> checkStatus() {
-        return Result.success(UserHolder.getUser());
+        return Result.success();
     }
 
 
