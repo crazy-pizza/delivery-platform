@@ -1,5 +1,7 @@
 package com.delivery.service;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -48,6 +51,8 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void addOrder(Order order) {
+        String currentTime = DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN);
+        order.setCreateTime(Long.valueOf(currentTime));
         List<Long> foodIDList = order.getDetailList().stream().map(OrderDetail::getFoodID).collect(Collectors.toList());
         List<Food> foodList = foodMapper.selectBatchIds(foodIDList);
         Map<Long, Food> foodMap = foodList.stream().collect(Collectors.toMap(Food::getFoodID, Function.identity()));

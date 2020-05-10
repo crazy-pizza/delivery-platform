@@ -44,6 +44,10 @@ public class Order extends Page {
     @ApiModelProperty("总金额")
     private BigDecimal totalAmount;
 
+    @ApiModelProperty("下单时间")
+    @TableField("createTime")
+    private Long createTime;
+
     @ApiModelProperty("订单明细")
     @TableField(exist = false)
     private List<OrderDetail> detailList;
