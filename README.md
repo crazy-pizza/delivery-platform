@@ -24,4 +24,5 @@ java -jar backend/target/delivery-platform-1.0.RELEASE.jar \
 -------------
 
 后端接口文档： http://localhost:7000/doc.html \
-建表sql：backend/src/main/resources/table.sql
+建表sql：backend/src/main/resources/table.sql \
+默认管理员账号：root 123456
