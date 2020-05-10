@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { Space, Button, Row, Col, message, Modal, Input } from 'antd'
 import { SCAntdTable, Icon } from '@components'
 import { withRouter } from "react-router-dom"
+import Decimal from 'decimal.js'
 import { axiosFetch } from '@utils'
 import styles from './foodDetail.module.css'
 
@@ -12,6 +13,14 @@ const FoodTable = ({
 }) => {
     const [selectedRowIndex, setSelectedRowIndex] = useState(-1)
     const [remark, setRemark] = useState('')
+    const validData = dataSource.filter(i => i.foodNum)
+
+    const total = validData.reduce((sum, food) => {
+        const amount = new Decimal(food.foodPrice).mul(food.foodNum)
+        sum = sum.add(amount)
+        return sum
+    }, new Decimal(0))
+
     const columns = [
         {
             title: '序号',
@@ -59,8 +68,6 @@ const FoodTable = ({
         }
     ]
     const addOrder = () => {
-        const validData = dataSource.filter(i => i.foodNum)
-    
         if (validData.length === 0) {
             message.warning('请选择菜品')
             return
@@ -105,8 +112,6 @@ const FoodTable = ({
                 })
             }
         })
-            
-        
     }
     return (
         <div style={{ width: '900px', margin: '0 auto' }}>
@@ -130,14 +135,17 @@ const FoodTable = ({
                     }}
                 />
             </Row>
-            <Row style={{ width: '400px', margin: '0 auto', paddingTop: '20px' }}>
-                <Col style={{ lineHeight: '32px' }} flex="70px">订单备注：</Col>
-                <Col flex="auto">
+            <Row style={{ paddingTop: '20px' }}>
+                <Col className={styles.colLineHeight} flex="70px">订单备注：</Col>
+                <Col flex="350px">
                     <Input
                         placeholder="请填写订单备注"
                         onChange={(e) => { setRemark(e.target.value) }}
                         type="text"
                     />
+                </Col>
+                <Col flex="auto" className={styles.totalContaner}>
+                    总金额：<span className={styles.priceSpan}>{total.toFixed(2)}</span> 元
                 </Col>
             </Row>
             <Row style={{ paddingTop: '20px' }}>
