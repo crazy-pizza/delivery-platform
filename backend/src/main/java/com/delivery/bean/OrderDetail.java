@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * <p>
  * 
@@ -45,5 +47,10 @@ public class OrderDetail {
     @ApiModelProperty("菜品名称")
     @TableField("foodDesc")
     private String foodDesc;
+
+
+    @TableField("foodPrice")
+    @ApiModelProperty("菜品价格")
+    private BigDecimal foodPrice;
 
 }

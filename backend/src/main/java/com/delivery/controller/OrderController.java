@@ -12,6 +12,7 @@ import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.OrderDetailService;
 import com.delivery.service.OrderService;
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,27 +36,31 @@ public class OrderController {
     @Autowired
     private OrderDetailService orderDetailService;
 
-    @Autowired
-    private Snowflake snowflake;
+
 
     @ApiOperation("用户下单")
     @PostMapping("/add")
     public Result add(@RequestBody Order order) {
-        User user = UserHolder.getUser();
-        long orderNo = snowflake.nextId();
-        order.setOrderNo(String.valueOf(orderNo));
-        order.setOrderStatus(1);
-        order.setUserID(user.getUserID());
         orderService.addOrder(order);
         return Result.success();
     }
 
-    @ApiOperation("修改订单状态")
-    @PostMapping("/checkStatus")
-    public Result delete(@RequestBody Order order) {
+    @ApiOperation("商家发货")
+    @PostMapping("/send")
+    public Result send(@RequestBody Order order) {
         Assert.notNull(order.getOrderID());
-        Assert.notNull(order.getOrderStatus());
-        orderService.updateById(order);
+        orderService.send(order.getOrderID());
+        return Result.success();
+    }
+
+    @ApiOperation("用户确认收货")
+    @PostMapping("/affirm")
+    public synchronized Result affirm(@RequestBody Order order) {
+        Assert.notNull(order.getOrderID());
+        Order entry = orderService.getById(order.getOrderID());
+        Preconditions.checkArgument(order.getOrderStatus() == 2 ,"订单状态不符");
+        entry.setOrderStatus(3);
+        orderService.updateById(entry);
         return Result.success();
     }
 

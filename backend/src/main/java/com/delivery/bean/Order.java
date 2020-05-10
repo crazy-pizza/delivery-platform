@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -38,6 +39,10 @@ public class Order extends Page {
     @TableField("merchantID")
     @ApiModelProperty("商家ID")
     private Long merchantID;
+
+    @TableField("totalAmount")
+    @ApiModelProperty("总金额")
+    private BigDecimal totalAmount;
 
     @ApiModelProperty("订单明细")
     @TableField(exist = false)

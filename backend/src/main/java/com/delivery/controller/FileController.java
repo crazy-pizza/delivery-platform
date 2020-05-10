@@ -6,6 +6,7 @@ import cn.hutool.core.lang.UUID;
 import com.delivery.common.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class FileController {
 
 
     @ApiOperation("下载文件")
-    @PostMapping("/download")
+    @GetMapping("/download")
     public void download(String fileName, @ApiIgnore HttpServletResponse response) throws IOException {
         String usrHome = System.getProperty("user.home");
         File file = new File(usrHome + "/" + fileName);

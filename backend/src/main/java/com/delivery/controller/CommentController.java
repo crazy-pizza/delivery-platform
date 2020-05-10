@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Comment;
-import com.delivery.bean.Food;
 import com.delivery.bean.User;
 import com.delivery.common.Result;
 import com.delivery.component.UserHolder;

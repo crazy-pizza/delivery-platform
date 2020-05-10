@@ -3,6 +3,7 @@ package com.delivery.component;
 import cn.hutool.core.lang.Assert;
 import com.delivery.common.Result;
 import com.delivery.common.ResultEnum;
+import com.google.common.base.Preconditions;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,8 +26,9 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Object errorHandler(Exception ex) {
         log.error("全局异常捕捉处理",ex);
-        return ex.getStackTrace()[0].getClassName().equals(Assert.class.getName()) ?
-                Result.error(ex.getMessage()) : Result.handle(ResultEnum.SYSTEM_ERROR);
+        String className = ex.getStackTrace()[0].getClassName();
+        boolean bzError = className.equals(Assert.class.getName()) || className.equals(Preconditions.class.getName());
+        return bzError ? Result.error(ex.getMessage()) : Result.handle(ResultEnum.SYSTEM_ERROR);
     }
 
     @ResponseBody
