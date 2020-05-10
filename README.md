@@ -1,7 +1,7 @@
 backend 后端项目
 
 技术架构：springboot spring mybatis mybatis-plus maven lombok log4j2 mysql \
-启动方式：backend/src/main/java/com.delivery/Application 运行main函数
+启动方式：backend/src/main/java/com/delivery/Application 运行main函数
 
 -------------
 frontend 前端项目
