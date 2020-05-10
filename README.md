@@ -1,6 +1,8 @@
+PC端外卖点餐平台系统，react + springboot小项目
+
 backend 后端项目
 
-技术架构：springboot spring mybatis mybatis-plus maven lombok log4j2 mysql \
+技术架构：springboot spring mybatis mybatis-plus maven lombok log4j2 mysql swagger \
 启动方式：backend/src/main/java/com/delivery/Application 运行main函数
 
 -------------
