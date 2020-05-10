@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(passportInterceptor)
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/add")
+                .excludePathPatterns("/file/**")
                 .excludePathPatterns("/swagger-resources")
                 .excludePathPatterns("/v2/api-docs")
                 .excludePathPatterns("/v2/api-docs-ext")
