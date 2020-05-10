@@ -6,10 +6,7 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.delivery.bean.Food;
-import com.delivery.bean.Order;
-import com.delivery.bean.OrderDetail;
-import com.delivery.bean.User;
+import com.delivery.bean.*;
 import com.delivery.component.UserHolder;
 import com.delivery.mapper.FoodMapper;
 import com.delivery.mapper.OrderDetailMapper;
@@ -57,7 +54,7 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         List<Food> foodList = foodMapper.selectBatchIds(foodIDList);
         Map<Long, Food> foodMap = foodList.stream().collect(Collectors.toMap(Food::getFoodID, Function.identity()));
         //计算订单总价格
-        BigDecimal totalAmount = order.getDetailList().stream().map(detail -> NumberUtil.mul(detail.getFoodNum(), foodMap.get(detail.getDetailID()).getFoodPrice())).reduce(NumberUtil::add).get();
+        BigDecimal totalAmount = order.getDetailList().stream().map(detail -> NumberUtil.mul(detail.getFoodNum(), foodMap.get(detail.getFoodID()).getFoodPrice())).reduce(NumberUtil::add).get();
         User user = UserHolder.getUser();
         order.setOrderNo(String.valueOf(snowflake.nextId()));
         order.setOrderStatus(1);
@@ -97,6 +94,12 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
             food.setBalance(sub);
             foodMapper.updateById(food);
         }
+    }
+
+
+
+    public List<OrderReport> report(OrderReport orderReport) {
+        return baseMapper.report(orderReport);
     }
 
 

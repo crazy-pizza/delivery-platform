@@ -2,7 +2,10 @@ package com.delivery.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.delivery.bean.Order;
+import com.delivery.bean.OrderReport;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderMapper extends BaseMapper<Order> {
+
+
+    List<OrderReport> report(OrderReport orderReport);
 
 }
