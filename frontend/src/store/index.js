@@ -1,5 +1,5 @@
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+// compose
 import userReducer from './user.reducer'
 import orgReducer from './org.reducer'
 import goodsReducer from './goods.reducer'
@@ -10,7 +10,7 @@ let $store = null
 const createReducer = (asyncReducers = {}) => combineReducers({
     user: userReducer,
     org: orgReducer,
-    good: goodsReducer,
+    goods: goodsReducer,
     supplier: supplierReducer,
     ...asyncReducers,
 })
@@ -32,7 +32,7 @@ const loggerMiddleware = ({ getState }) => (next) => (action) => {
  */
 const initStore = (initialState) => {
 
-    const isDev = process.env.NODE_ENV === 'development'
+    // const isDev = process.env.NODE_ENV === 'development'
 
     // const composeEnhancers = isDev ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;
     const store = createStore(

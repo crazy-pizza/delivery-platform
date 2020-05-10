@@ -1,0 +1,19 @@
+.ulContainer {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.ulContainer li {
+    height: 50px;
+    line-height: 50px;
+    padding-left: 40px;
+    font-size: 15px;
+    border: 1px solid #dedede;
+    border-bottom: none;
+    background-color: #efefef;
+    cursor: pointer;
+}
+
+.ulContainer li:last-child {
+    background-color: #dedede;
+}

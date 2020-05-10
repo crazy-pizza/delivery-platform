@@ -1,11 +1,13 @@
 const initialState = {
     userName: null,
+    userID: null,
+    currentShopUserID: null,
 }
 
 const reducer = ($$state = initialState, action) => {
   switch (action.type) {
-    case "setUserName":
-      return { ...$$state, userName: action.payload }
+    case "setUserInfo":
+      return { ...$$state, ...action.payload }
     default:
       return $$state
   }

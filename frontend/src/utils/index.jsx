@@ -1,6 +1,6 @@
 import { Modal } from "antd"
 import _ from 'lodash'
-import { menuListData } from '@constants'
+import { menuListData, orderMenuListData, VOUCHER_TYPE_MAP } from '@constants'
 export { getTableTotalWidth } from './TableColumns'
 export { getColumnWidth } from './getColumnWidth'
 export { formatTreeWthTitleAndKey } from './tree'
@@ -11,8 +11,6 @@ const parseUrl = (url) => {
 }
 
 const getAllSonEntry = () => _.flatten(_.map(menuListData, 'items'))
-
-
 
 /**
  * 根据页面编码获取组件名称，以按照路径加载组件
@@ -35,6 +33,10 @@ export const getEntry = (code) => {
         return allEntry.find(entry => entry.entryCode === code)
     }
     return allEntry
+}
+
+export const getOrderEntry = (code) => {
+    return orderMenuListData.find(entry => entry.entryCode === code)
 }
 
 /**
@@ -92,7 +94,8 @@ export const axiosFetch = (options) => {
     } = options
     const protocol = window.location.protocol
     const host = getHost()
-    const url = `${protocol}//${host}/${parseUrl(api)}`
+    // const url = `${protocol}//${host}/${parseUrl(api)}`
+    const url = `/${parseUrl(api)}`
 
     return window.fetch(url, {
         method: 'POST',
@@ -102,14 +105,14 @@ export const axiosFetch = (options) => {
     }).then(response => {
         return response.json()
     }).then(res => {
-        const { success, data } = res
-        return success ? data : Promise.reject(res)
+        const { code, data } = res
+        return code === 200 ? data : Promise.reject(res)
     }).catch(err => {
         showError && Modal.error({
             title: '提示',
             content: err.msg,
             onOk: () => {
-                const expired = err.code === '002' // 登录失效
+                const expired = err.code === 300 // 登录失效
                 if (expired) {
                     window.location.href = `${protocol}//${host}/login`
                 }
@@ -117,4 +120,15 @@ export const axiosFetch = (options) => {
         })
         return Promise.reject(err)
     })
+}
+
+export const getVoucherType = () => {
+    const voucherTypeArr = []
+    for (let k in VOUCHER_TYPE_MAP) {
+        voucherTypeArr.push({
+            type: k,
+            name: VOUCHER_TYPE_MAP[k],
+        })
+    }
+    return voucherTypeArr
 }

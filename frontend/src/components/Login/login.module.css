@@ -45,7 +45,7 @@
 
 .login-section{
     width: 380px;
-    height: 380px;
+    height: 315px;
     position: absolute;
     top: 50vh;
     right: 12%;
@@ -58,7 +58,25 @@
     overflow: hidden;
     transition: all .3s cubic-bezier(.645,.045,.355,1);
 }
-.login-section li {
+
+.register-section{
+    width: 380px;
+    height: 410px;
+    position: absolute;
+    top: 50vh;
+    right: 12%;
+    transform: translateY(-50%);
+    z-index: 9;
+    padding: 12px 30px;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,.95);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+}
+
+.login-section li,
+.register-section li{
     margin-bottom: 12px;
 }
 .login-err{
@@ -106,7 +124,7 @@
 .AccSubmit{
     line-height: 40px;
     display: block;
-    background: #1ab495;
+    background: #1ca1dc;
     color: #fff;
     border-radius: 5px;
     font-size: 16px;

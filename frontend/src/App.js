@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'redux-react-hook'
 import { Route, Redirect, Switch, useHistory } from "react-router-dom"
-import { Skeleton, Login } from '@components'
+import { Skeleton, Login, SkeletonOrder } from '@components'
 import { axiosFetch } from '@utils'
 
 import { ConfigProvider, message } from 'antd'
@@ -18,20 +18,26 @@ function App() {
 
   useEffect(() => {
     axiosFetch({
-      api: '/checkStatus',
+      api: '/user/checkStatus',
       params: {},
       showError: false,
     }).then(res => {
-        const nickName = res && res.userName
         dispatch({
-          type: 'setUserName',
-          payload: nickName,
+          type: 'setUserInfo',
+          payload: {
+            userName: res.userName,
+            userID: res.userID,
+          },
         })
+        if (res.role === '3') {
+          history.replace('/order/order')
+        }
+
         message.success('欢迎回来')
     }).catch(err => {
         dispatch({
-          type: 'setUserName',
-          payload: null,
+          type: 'setUserInfo',
+          payload: {},
         })
         history.replace('/login')
     })
@@ -46,6 +52,8 @@ function App() {
             <Route exact path="/login"><Login /></Route>
 
             <Route path="/index/:code"><Skeleton /></Route>
+
+            <Route path="/order/:code"><SkeletonOrder /></Route>
 
             <Route path="*"><Redirect to="/index/home" /></Route>
           </Switch>

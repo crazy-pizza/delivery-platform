@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Button } from 'antd';
-import { useDispatch } from 'redux-react-hook'
 import { useParams, useHistory } from "react-router-dom"
 import { Icon } from '@components'
 import { getEntry } from '@utils'
-import { serviceUrl } from '@constants'
-import { axiosFetch } from '@utils'
 import MenuUser from './MenuUser'
 import MenuList from './MenuList'
 import Home from './Home'
@@ -19,43 +16,6 @@ const Skeleton = () => {
     const [collapsed, setCollapsed] = useState(false)
     const [activeTabKey, setActiveKey] = useState(code)
     const [panes, setPanes] = useState([])
-    const dispatch = useDispatch()
-
-    const getOrgs = () => (
-        axiosFetch({
-            api: serviceUrl.selectOrgs,
-            params: {},
-        })
-    )
-
-    const getSupplierCategory = () => (
-        axiosFetch({
-            api: serviceUrl.querySupplierCategory,
-            params: {},
-        })
-    )
-
-    const getGoodsCategory = () => (
-        axiosFetch({
-            api: serviceUrl.queryGoodsCateogry,
-            params: {},
-        })
-    )
-
-    useEffect(() => {
-        getOrgs()
-            .then(res => { dispatch({ type: 'setOrgs', payload: res}) })
-            .catch(res => { dispatch({ type: 'setOrgs', payload: []}) })
-
-        getSupplierCategory()
-            .then(res => { dispatch({ type: 'setSupplierCategory', payload: res }) })
-            .catch(res => { dispatch({ type: 'setSupplierCategory', payload: []}) })
-
-        getGoodsCategory()
-            .then(res => { dispatch({ type: 'setGoodsCategory', payload: res }) })
-            .catch(res => { dispatch({ type: 'setGoodsCategory', payload: []}) })
-    }, [])
-
 
     useEffect(() => {
         if (code === 'home') return

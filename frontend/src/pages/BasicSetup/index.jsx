@@ -72,36 +72,6 @@ class BasicSetup extends React.Component {
                             onFinishFailed={this.onFinishFailed}
                         >
                             <Form.Item
-                                label="第三方财务系统"
-                                name="systemOption"
-                                rules={[{ required: true, message: '请求选择财务系统' }]}
-                            >
-                                <Select>
-                                    <Select.Option value="demo">Demo</Select.Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item
-                                label="财务系统接口地址"
-                                name="url"
-                                rules={[{ required: true, message: '请输入接口地址' }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                label="财务系统用户名"
-                                name="userName"
-                                rules={[{ required: true, message: '请输入用户名' }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                label="财务系统密码"
-                                name="userPwd"
-                                rules={[{ required: true, message: '请输入密码' }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
                                 label="凭证日期"
                                 name="dateType"
                                 rules={[{ required: true, message: '请选择凭证日期' }]}

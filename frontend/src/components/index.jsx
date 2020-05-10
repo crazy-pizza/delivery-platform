@@ -1,23 +1,19 @@
 import Icon from './Icon'
+import SkeletonOrder from './SkeletonOrder'
 import Login from './Login'
 import BasicPage from './BasicPage'
 import Skeleton from './Skeleton'
 import SCAntdTree from './SCAntdTree'
 import SCAntdTable from './SCAntdTable'
-import SelectOrg from './SelectOrg'
-import SelectSubject from './SelectSubject'
-import SelectAccountset from './SelectAccountset'
-import SelectSupplierCategory from './SelectSupplierCategory'
+import BillDetail from './BillDetail'
 
 export {
 	Icon,
+	SkeletonOrder,
 	Login,
 	BasicPage,
 	Skeleton,
 	SCAntdTree,
 	SCAntdTable,
-	SelectOrg,
-	SelectSubject,
-	SelectAccountset,
-	SelectSupplierCategory,
+	BillDetail,
 }

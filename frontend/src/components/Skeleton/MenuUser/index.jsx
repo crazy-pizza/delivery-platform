@@ -13,7 +13,7 @@ const User = (props) => {
     const userName = useMappedState($$state => $$state.user.userName)
     const handleMenuClick = (type) => {
         axiosFetch({
-            api: '/loginOut',
+            api: '/user/logout',
             params: {},
         }).then((res) => {
             message.success('已退出')
