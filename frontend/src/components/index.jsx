@@ -3,7 +3,6 @@ import SkeletonOrder from './SkeletonOrder'
 import Login from './Login'
 import BasicPage from './BasicPage'
 import Skeleton from './Skeleton'
-import SCAntdTree from './SCAntdTree'
 import SCAntdTable from './SCAntdTable'
 import BillDetail from './BillDetail'
 
@@ -13,7 +12,6 @@ export {
 	Login,
 	BasicPage,
 	Skeleton,
-	SCAntdTree,
 	SCAntdTable,
 	BillDetail,
 }
