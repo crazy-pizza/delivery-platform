@@ -1,17 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 // compose
 import userReducer from './user.reducer'
-import orgReducer from './org.reducer'
-import goodsReducer from './goods.reducer'
-import supplierReducer from './supplier.reducer'
 
 let $store = null
 
 const createReducer = (asyncReducers = {}) => combineReducers({
     user: userReducer,
-    org: orgReducer,
-    goods: goodsReducer,
-    supplier: supplierReducer,
     ...asyncReducers,
 })
 

@@ -1,8 +1,6 @@
 import { Modal } from "antd"
 import _ from 'lodash'
-import { menuListData, orderMenuListData, VOUCHER_TYPE_MAP } from '@constants'
-export { getTableTotalWidth } from './TableColumns'
-export { getColumnWidth } from './getColumnWidth'
+import { menuListData, orderMenuListData } from '@constants'
 export { formatTreeWthTitleAndKey } from './tree'
 export { LEFT_TREE_WIDTH } from './layout'
 
@@ -120,15 +118,4 @@ export const axiosFetch = (options) => {
         })
         return Promise.reject(err)
     })
-}
-
-export const getVoucherType = () => {
-    const voucherTypeArr = []
-    for (let k in VOUCHER_TYPE_MAP) {
-        voucherTypeArr.push({
-            type: k,
-            name: VOUCHER_TYPE_MAP[k],
-        })
-    }
-    return voucherTypeArr
 }
