@@ -103,7 +103,7 @@ public class UserController {
     @ApiOperation("检查登录状态")
     @PostMapping("/checkStatus")
     public Result<User> checkStatus() {
-        User user = UserHolder.getUser();
+        User user = userService.getById(UserHolder.getUser().getUserID());
         return Result.success(user);
     }
 
