@@ -45,12 +45,12 @@ const BillTable = ({
                         )
                     }
                     {
-                        // record.orderStatus === 3 && (
+                        record.orderStatus === 3 && (
                             <button
                                 className="link-button"
                                 onClick={(e) => { toComment(record) }}
                             >评价</button>
-                        // )
+                        )
                     }
                 </Space>
             ),

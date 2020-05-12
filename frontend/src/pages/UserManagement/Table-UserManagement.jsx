@@ -9,7 +9,7 @@ const UserManagementTable = ({
     current,
     dataSource,
     updatePage,
-    editRecord,
+    // editRecord,
     auditRecord, 
     deleteRecord,
 }) => {
@@ -44,10 +44,10 @@ const UserManagementTable = ({
                             >禁用</button>
                         )
                     }
-                    <button
+                    {/* <button
                         className="link-button"
                         onClick={(e) => { editRecord(record) }}
-                    >编辑</button>
+                    >编辑</button> */}
                     <button
                         className="link-button"
                         onClick={(e) => { deleteRecord(record) }}
