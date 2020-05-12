@@ -7,8 +7,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
-@ApiModel("菜品评论")
+@ApiModel("订单评价")
 @TableName("comment")
 public class Comment extends Page {
 
@@ -21,9 +23,13 @@ public class Comment extends Page {
     @TableField("userID")
     private Long userID;
 
-    @ApiModelProperty("菜品ID")
-    @TableField("foodID")
-    private Long foodID;
+    @ApiModelProperty("订单ID")
+    @TableField("orderID")
+    private Long orderID;
+
+    @TableField("merchantID")
+    @ApiModelProperty("商家ID")
+    private Long merchantID;
 
     @ApiModelProperty("评论图片")
     @TableField("imagePath")
@@ -37,6 +43,10 @@ public class Comment extends Page {
     private String content;
 
     @ApiModelProperty("评论星级")
-    private Integer star;
+    private BigDecimal star;
+
+    @ApiModelProperty("评论人")
+    @TableField(exist = false)
+    private User user;
 
 }

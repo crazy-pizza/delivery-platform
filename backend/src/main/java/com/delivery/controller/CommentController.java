@@ -7,10 +7,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Comment;
+import com.delivery.bean.Order;
 import com.delivery.bean.User;
 import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.CommentService;
+import com.delivery.service.OrderService;
+import com.delivery.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +34,20 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
+
 
 
     @ApiOperation("添加评论")
     @PostMapping("/add")
     public Result add(@RequestBody Comment comment) {
-        Assert.notNull(comment.getFoodID());
+        Assert.notNull(comment.getOrderID());
+        Order order = orderService.getById(comment.getOrderID());
+        comment.setMerchantID(order.getMerchantID());
         User user = UserHolder.getUser();
         comment.setUserID(user.getUserID());
         String currentTime = DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN);
@@ -50,15 +61,18 @@ public class CommentController {
 
 
 
-    @ApiOperation("菜品评论列表")
+    @ApiOperation("店铺评论列表")
     @PostMapping("/list")
     public Result<IPage<Comment>> list(@RequestBody Comment comment) {
-        Assert.notNull(comment.getFoodID());
         Page<Comment> page = new Page<>(comment.getPageNo(), comment.getPageSize());
         LambdaQueryWrapper<Comment> query = new LambdaQueryWrapper<Comment>()
-                .eq(Comment::getFoodID, comment.getFoodID()).orderByDesc(Comment::getCreateTime);
+                .eq(Comment::getMerchantID, comment.getMerchantID()).orderByDesc(Comment::getCreateTime);
         Optional.ofNullable(comment.getStar()).ifPresent(star -> query.eq(Comment::getStar, star));
         IPage<Comment> pageList = commentService.page(page, query);
+        for(Comment detail : pageList.getRecords()) {
+            User user = userService.getById(detail.getUserID());
+            detail.setUser(user);
+        }
         return Result.success(pageList);
     }
 

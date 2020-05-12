@@ -2,6 +2,7 @@ package com.delivery.service;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -41,6 +42,9 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
     @Autowired
     private Snowflake snowflake;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 用户下单
      *
@@ -52,10 +56,16 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         order.setCreateTime(Long.valueOf(currentTime));
         List<Long> foodIDList = order.getDetailList().stream().map(OrderDetail::getFoodID).collect(Collectors.toList());
         List<Food> foodList = foodMapper.selectBatchIds(foodIDList);
+        Long merchantID = foodList.get(0).getMerchantID();
+        User merchant = userService.getById(merchantID);
+        Assert.notNull(merchant.getAddress() ,"商家%s没设置商家地址，此商家不能下单", merchant.getAddress());
+        order.setMerchantAddress(merchant.getAddress());
+        User user = userService.getById(UserHolder.getUser().getUserID());
+        Assert.notNull(user.getAddress() ,"您还没有设置收货地址，不能下单");
+        order.setUserAddress(user.getAddress());
         Map<Long, Food> foodMap = foodList.stream().collect(Collectors.toMap(Food::getFoodID, Function.identity()));
         //计算订单总价格
         BigDecimal totalAmount = order.getDetailList().stream().map(detail -> NumberUtil.mul(detail.getFoodNum(), foodMap.get(detail.getFoodID()).getFoodPrice())).reduce(NumberUtil::add).get();
-        User user = UserHolder.getUser();
         order.setOrderNo(String.valueOf(snowflake.nextId()));
         order.setOrderStatus(1);
         order.setUserID(user.getUserID());
