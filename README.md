@@ -10,14 +10,14 @@ backend 后端项目
 frontend 前端项目
 
 技术架构：react antD webpack babel redux \
-启动方式：frontend/package.json 点击start \
+启动方式：进入前端根目录 执行npm run 或者 frontend/package.json 点击start \
 访问http://localhost:3000
 
 -------------
 jar包启动方式：
 
 打开IDEA Terminal \
-执行命令 mvn install \
+进入项目根目录 执行命令 mvn install \
 java -jar backend/target/delivery-platform-1.0.RELEASE.jar \
 访问 http://localhost:7000即可
 
