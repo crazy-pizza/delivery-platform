@@ -1,7 +1,7 @@
 import React from 'react'
-import { message, Modal } from 'antd'
+import { message, Modal, Avatar } from 'antd'
 import styles from './my.module.css'
-import { Icon } from '@components'
+import { Icon, UploadAvatar } from '@components'
 import { axiosFetch } from '@utils'
 import { withRouter } from 'react-router-dom'
 
@@ -26,6 +26,8 @@ export const My = (props) => {
 
     return (
         <ul className={styles.ulContainer}>
+            <UploadAvatar />
+
             <li>我的收藏</li>
             <li>我的地址</li>
             <li>我的积分</li>

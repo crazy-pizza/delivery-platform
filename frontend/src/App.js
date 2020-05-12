@@ -24,15 +24,11 @@ function App() {
     }).then(res => {
         dispatch({
           type: 'setUserInfo',
-          payload: {
-            userName: res.userName,
-            userID: res.userID,
-          },
+          payload: { ...res },
         })
         if (res.role === '3') {
           history.replace('/order/order')
         }
-
         message.success('欢迎回来')
     }).catch(err => {
         dispatch({

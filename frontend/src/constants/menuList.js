@@ -1,32 +1,45 @@
 const menuListData = [
     {
-        title: '菜品信息',
+        title: '菜品管理',
         entryCode: '1',
-        icon: 'VerifiedOutlined',
+        icon: 'ProfileOutlined',
         items: [{
-            title: '菜品管理',
+            title: '我的菜品',
             entryCode: '1-1',
             component: 'FoodSet',
+            role: '2'
         }],
     },
     {
-        title: '库存管理',
+        title: '订单管理',
         entryCode: '2',
         icon: 'FileTextOutlined',
         items: [{
-            title: '库存查询',
+            title: '我的订单',
             entryCode: '2-1',
-            component: 'BasicSetup',
+            component: 'MyOrder',
+            role: '2'
         }]
     },
     {
-        title: '订单管理',
-        entryCode: '3',
-        icon: 'AccountBookOutlined',
+        title: '店铺管理',
+        icon: 'ShopOutlined',
         items: [{
-            title: '订单查询',
+            title: '店铺设置',
             entryCode: '3-1',
-            component: 'MyOrder',
+            component: 'ShopSet',
+            role: '2'
+        }]
+    },
+    {
+        title: '用户信息',
+        entryCode: '4',
+        icon: 'UsergroupDeleteOutlined',
+        items: [{
+            title: '用户管理',
+            entryCode: '4-1',
+            component: 'UserManagement',
+            role: '1'
         }]
     },
 ]

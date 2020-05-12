@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { Space, Button, Row, Col, message, Modal, Input } from 'antd'
+import { Space, Button, Row, Col, message, Modal, Input, Avatar } from 'antd'
 import { SCAntdTable, Icon } from '@components'
 import { withRouter } from "react-router-dom"
 import Decimal from 'decimal.js'
-import { axiosFetch } from '@utils'
+import { axiosFetch, getSrc } from '@utils'
 import styles from './foodDetail.module.css'
 
 const FoodTable = ({
@@ -46,6 +46,13 @@ const FoodTable = ({
             title: '菜品图片',
             width: 160,
             dataIndex: 'imagePath',
+            render: (text) => (
+                <Avatar
+                    shape="square"
+                    size="large"
+                    src={getSrc(text)}
+                />
+            )
         }, {
             title: '购买数量',
             dataIndex: 'foodNum',

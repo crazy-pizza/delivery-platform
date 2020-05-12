@@ -5,6 +5,8 @@ import BasicPage from './BasicPage'
 import Skeleton from './Skeleton'
 import SCAntdTable from './SCAntdTable'
 import BillDetail from './BillDetail'
+import UploadAvatar from './UploadAvatar'
+import UploadPic from './UploadPic'
 
 export {
 	Icon,
@@ -14,4 +16,6 @@ export {
 	Skeleton,
 	SCAntdTable,
 	BillDetail,
+	UploadAvatar,
+	UploadPic,
 }

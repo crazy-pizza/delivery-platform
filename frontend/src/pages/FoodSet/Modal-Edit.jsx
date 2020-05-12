@@ -1,13 +1,15 @@
 import React from 'react'
-import { Modal, Button, Form, Input } from 'antd'
+import { Modal, Button, Form, Input, InputNumber } from 'antd'
+import { UploadPic } from '@components'
 
-const ACCOUNT_PRICE = '菜品价格'
-const ACCOUNT_NAME = '菜品名称'
-const ACCOUNT_DESC = '菜品描述'
+const FOOD_PRICE = '菜品价格'
+const FOOD_NAME = '菜品名称'
+const FOOD_DESC = '菜品描述'
+const FOOD_STOCK = '菜品库存数量'
 
 const AddEditModal  = (props) => {
     const [thisFrom] = Form.useForm();
-    const { saveFood, currentFood = {}, handleCancel, title } = props
+    const { saveFood, currentFood = {}, handleCancel, title, searchList } = props
     const onCancel = () => {
         handleCancel()
     }
@@ -45,26 +47,36 @@ const AddEditModal  = (props) => {
                 initialValues={currentFood}
             >
                 <Form.Item
-                    label={ACCOUNT_NAME}
+                    label={FOOD_NAME}
                     name='foodName'
-                    rules={[{ required: true, message: `请输入${ACCOUNT_NAME}` }]}
+                    rules={[{ required: true, message: `请输入${FOOD_NAME}` }]}
                 >
-                    <Input placeholder={`请输入${ACCOUNT_NAME}`} />
+                    <Input placeholder={`请输入${FOOD_NAME}`} />
                 </Form.Item>
                 <Form.Item
-                    label={ACCOUNT_PRICE}
+                    label={FOOD_PRICE}
                     name='foodPrice'
-                    rules={[{ required: true, message: `请输入${ACCOUNT_PRICE}` }]}
+                    rules={[{ required: true, message: `请输入${FOOD_PRICE}` }]}
                 >
-                    <Input placeholder={`请输入${ACCOUNT_PRICE}`} />
+                    <InputNumber style={{ width: '100%' }} defaultValue={0} placeholder={`请输入${FOOD_PRICE}`}/>
                 </Form.Item>
                 <Form.Item
-                    label={ACCOUNT_DESC}
+                    label={FOOD_DESC}
                     name='foodDesc'
-                    rules={[{ message: `请输入${ACCOUNT_DESC}` }]}
+                    rules={[{ message: `请输入${FOOD_DESC}` }]}
                 >
-                    <Input placeholder={`请输入${ACCOUNT_DESC}`} />
+                    <Input placeholder={`请输入${FOOD_DESC}`} />
                 </Form.Item>
+
+                <Form.Item
+                    label={FOOD_STOCK}
+                    name='balance'
+                    rules={[{ required: true, message: `请输入${FOOD_STOCK}` }]}
+                >
+                    <InputNumber style={{ width: '100%' }} defaultValue={0} placeholder={`请输入${FOOD_STOCK}`} />
+                </Form.Item>
+
+                <UploadPic callback={searchList} food={currentFood} />
             </Form>
         </Modal>
     )

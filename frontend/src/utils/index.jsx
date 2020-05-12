@@ -33,10 +33,6 @@ export const getEntry = (code) => {
     return allEntry
 }
 
-export const getOrderEntry = (code) => {
-    return orderMenuListData.find(entry => entry.entryCode === code)
-}
-
 /**
  * 转化为千位分隔符
  * @param {string|number} num 
@@ -87,6 +83,7 @@ export const getHost = () => {
 export const axiosFetch = (options) => {
     const {
         api,
+        formData,
         params = {},
         showError = true,
     } = options
@@ -94,12 +91,11 @@ export const axiosFetch = (options) => {
     const host = getHost()
     // const url = `${protocol}//${host}/${parseUrl(api)}`
     const url = `/${parseUrl(api)}`
-
     return window.fetch(url, {
+        headers: formData ? {} : { 'Content-Type': 'application/json' },
         method: 'POST',
         mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params),
+        body: formData ? formData : JSON.stringify(params),
     }).then(response => {
         return response.json()
     }).then(res => {
@@ -118,4 +114,9 @@ export const axiosFetch = (options) => {
         })
         return Promise.reject(err)
     })
+}
+
+export const getSrc = (filename) => {
+    if (!filename) return ''
+    return `http://172.16.42.100:7000/file/download?fileName=${filename}`
 }

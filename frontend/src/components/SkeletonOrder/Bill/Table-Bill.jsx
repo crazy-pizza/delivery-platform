@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Space } from 'antd'
 import styles from './bill.module.css'
 import { SCAntdTable } from '@components'
+import AddComment from './AddComment'
 
 const statusList = {
     '1': '商家未接单',
@@ -15,6 +16,8 @@ const BillTable = ({
     lookDetail,
 }) => {
     const [selectedRowIndex, setSelectedRowIndex] = useState(-1)
+    const [currentRecord, setCurrentRecord] = useState({})
+    const [vis, setVis] = useState(false)
     const columns = [
         {
             title: '序号',
@@ -32,7 +35,7 @@ const BillTable = ({
                     <button
                         className="link-button"
                         onClick={(e) => { lookDetail(record) }}
-                    >查看详情</button>
+                    >查看</button>
                     {
                         record.orderStatus === 2 && (
                             <button
@@ -40,6 +43,14 @@ const BillTable = ({
                                 onClick={(e) => { auditRecord(record) }}
                             >确认收货</button>
                         )
+                    }
+                    {
+                        // record.orderStatus === 3 && (
+                            <button
+                                className="link-button"
+                                onClick={(e) => { toComment(record) }}
+                            >评价</button>
+                        // )
                     }
                 </Space>
             ),
@@ -58,6 +69,11 @@ const BillTable = ({
             dataIndex: 'remark',
         },
     ]
+
+    const toComment = (data) => {
+        setCurrentRecord(data)
+        setVis(true)
+    }
 
     return (
         <div>
@@ -79,6 +95,9 @@ const BillTable = ({
                         return index === selectedRowIndex ? styles.rowSelectedBg : ''
                     }}
                 />
+                {
+                    vis && ( <AddComment record={currentRecord} onCancel={() => { setVis(false) }} />)
+                }
             </div>
         </div>
     )

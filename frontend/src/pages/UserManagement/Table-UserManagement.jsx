@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { Space, Avatar } from 'antd'
-import { getSrc } from '@utils'
-import { SCAntdTable } from '@components'
+import { Space } from 'antd'
 import styles from './foodSet.module.css'
+import { SCAntdTable } from '@components'
 
-const FoodTable = ({
+const UserManagementTable = ({
     size,
     total,
     current,
     dataSource,
     updatePage,
     editRecord,
+    auditRecord, 
     deleteRecord,
 }) => {
     const [selectedRowIndex, setSelectedRowIndex] = useState(-1)
@@ -28,6 +28,22 @@ const FoodTable = ({
             align: 'center',
             render: (text, record) => (
                 <Space>
+                    {
+                        record.isActive === 2 && (
+                            <button
+                                className="link-button"
+                                onClick={(e) => { auditRecord('启用', record) }}
+                            >启用</button>
+                        )
+                    }
+                    {
+                        record.isActive === 1 && (
+                            <button
+                                className="link-button"
+                                onClick={(e) => { auditRecord('禁用', record) }}
+                            >禁用</button>
+                        )
+                    }
                     <button
                         className="link-button"
                         onClick={(e) => { editRecord(record) }}
@@ -39,32 +55,44 @@ const FoodTable = ({
                 </Space>
             ),
         }, {
-            title: '菜品名称',
-            dataIndex: 'foodName',
-            width: 160,
-            ellipsis: true,
-        }, {
-            title: '菜品描述',
-            dataIndex: 'foodDesc',
-            width: 160,
-        }, {
-            title: '菜品库存',
-            dataIndex: 'balance',
-            width: 100,
-        }, {
-            title: '菜品价格',
-            dataIndex: 'foodPrice',
+            title: '用户ID',
+            dataIndex: 'userID',
             width: 100,
             ellipsis: true,
         }, {
-            title: '菜品图片',
-            dataIndex: 'imagePath',
+            title: '用户名',
+            dataIndex: 'userName',
+            width: 100,
+        }, {
+            title: '店铺名称',
+            dataIndex: 'shopName',
+            width: 180,
+        }, {
+            title: '用户类型',
+            dataIndex: 'role',
+            width: 90,
+            render: (text) => {
+                switch (text) {
+                    case '1':
+                        return '超级管理员'
+                    case '2':
+                        return '商家'
+                    case '3':
+                        return '个人'
+                    default:
+                        return ''
+                }
+            },
+        }, {
+            title: '店铺描述',
+            dataIndex: 'shopDesc',
+            width: 200,
+            ellipsis: true,
+        }, {
+            title: '启用状态',
+            dataIndex: 'isActive',
             render: (text) => (
-                <Avatar
-                    shape="square"
-                    size="large"
-                    src={getSrc(text)}
-                />
+                text === 1 ? '已启用' : <span style={{ color: '#f66' }}>已禁用</span>
             )
         }
     ]
@@ -79,10 +107,10 @@ const FoodTable = ({
 
     return (
         <div>
-            <div style={{ width: '940px' }}>
+            <div style={{ width: '1000px' }}>
                 <SCAntdTable
-                    rowKey="foodID"
-                    scroll={{ x: 870, y: 260 }}
+                    rowKey="userID"
+                    scroll={{ y: 360 }}
                     columns={columns}
                     dataSource={dataSource}
                     pageSize={size}
@@ -94,7 +122,6 @@ const FoodTable = ({
                         return {
                             onClick: (e) => {
                                 setSelectedRowIndex(index)
-                                // onClickRow(record, index)
                             },
                         }
                     }}
@@ -107,4 +134,4 @@ const FoodTable = ({
     )
 }
 
-export default FoodTable
+export default UserManagementTable

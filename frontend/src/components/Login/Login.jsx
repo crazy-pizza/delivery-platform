@@ -32,20 +32,17 @@ const Login = (props) => {
                 userName: userName,
                 password,
             },
-        }).then(({ userName, userID, role }) => {
+        }).then((res) => {
             dispatch({
                 type: 'setUserInfo',
-                payload: {
-                    userName,
-                    userID,
-                },
+                payload: { ...res },
             })
             message.success('登陆成功')
-            if (role === '1') {
+            if (res.role === '1') {
                 props.history.replace('/index/home')
-            } else if (role === '2') {
+            } else if (res.role === '2') {
                 props.history.replace('/index/home')
-            } else if(role === '3') {
+            } else if(res.role === '3') {
                 props.history.replace('/order/order')
             }
         })
@@ -100,12 +97,10 @@ const Login = (props) => {
                             <a onClick={onOK} className={submitClass} block>登录</a>
                         </li>
                     </ul>
+                    <p><a href="javascript:void(0)" onClick={props.goRegister}>注册账户 &gt;</a></p>
                 </form>
-                <p><a href="javascript:void(0)" onClick={props.goRegister}>注册账户 &gt;</a></p>
-                <div className={style['login-footer']}>
-
-                </div>
             </div>
+            <div className={style['login-footer']}></div>
         </section>
     )
 }

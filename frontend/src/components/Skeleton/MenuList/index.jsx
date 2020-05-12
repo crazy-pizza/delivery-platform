@@ -1,16 +1,22 @@
 import React from 'react'
 import { Menu } from 'antd'
 import { menuListData } from '@constants'
+import { useMappedState } from 'redux-react-hook'
 import { Icon } from '@components'
 import { Link } from "react-router-dom"
 
 const { Item, SubMenu } = Menu
 
 const MenuList = () => {
+    const role = useMappedState($$state => $$state.user.role)
+
     const renderMenuList = () => (
         menuListData.map(menu => {
             const { entryCode, items, icon = 'QuestionOutlined', title } = menu
             if (items.length) {
+
+                if (items.filter(m => m.role === role).length === 0) return null
+
                 return (
                     <SubMenu
                         key={entryCode}

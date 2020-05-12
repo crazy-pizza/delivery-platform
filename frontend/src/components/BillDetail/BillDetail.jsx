@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import { Modal, Button } from "antd"
+import { getSrc } from '@utils'
+import { Modal, Button, Avatar } from "antd"
 import { SCAntdTable } from '@components'
 
 const BillDetail = ({
@@ -31,14 +32,14 @@ const BillDetail = ({
             title: '菜品图片',
             dataIndex: 'imagePath',
             render: (text) => (
-                <img style={{ height: '100px', maxWidth: '180px' }} src={getSrc(text)} alt={text} />
+                <Avatar
+                    shape="square"
+                    size="large"
+                    src={getSrc(text)}
+                />
             )
         }
     ]
-
-    const getSrc = (filename) => {
-        return filename ? `http://wcpay.ictry.com:5050/file/download?fileName=${filename}` : ''
-    }
 
     return (
         <Modal

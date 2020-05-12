@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useMappedState } from 'redux-react-hook'
 import { Tabs } from 'antd'
 import { BasicPage } from '@components'
 import { useEffect } from 'react'
@@ -14,7 +15,7 @@ const TabList = (props) => {
             <DefaultTabBar {...props} style={{ margin: 0 }} />
         )
     }
-
+    const userID = useMappedState($$state => $$state.user.userID)
     useEffect(() => {
         const resizeHandler = debounce(() => {
             const mainContent = document.querySelector('#main-content')
@@ -45,8 +46,11 @@ const TabList = (props) => {
                 panes.map(page => {
                     const isCurrent = activeTabKey === page.entryCode
                     return (
-                        <TabPane style={{ 'height': `${isCurrent ? paneHeight : 0}px`, 'overflow': 'auto' }} tab={page.title} key={page.entryCode}>
-                            <BasicPage {...page} />
+                        <TabPane
+                            style={{ 'height': `${isCurrent ? paneHeight : 0}px`, 'overflow': 'auto' }}
+                            tab={page.title} key={page.entryCode}
+                        >
+                            { userID && <BasicPage {...page} /> }
                         </TabPane>
                     )
                 })

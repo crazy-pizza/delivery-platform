@@ -6,13 +6,13 @@ import FoodTable from './FoodTable'
 
 export const ShopFoodDetail = () => {
     const [foodList, setFoodList] = useState([])
-    const userID = useMappedState($$state => $$state.user.currentShopUserID)
+    const merchantID = useMappedState($$state => $$state.user.currentShopUserID)
 
     useEffect(() => {
         axiosFetch({
             api: serviceUrl.foodSelect,
             params: {
-                userID,
+                merchantID,
                 pageNo: 1,
                 pageSize: 500,
             },

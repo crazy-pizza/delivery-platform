@@ -1,63 +1,71 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useMappedState } from 'redux-react-hook'
 import { Space, Button, Row, Col, message, Modal, Input } from 'antd'
 import { axiosFetch } from '@utils'
 import { Icon } from '@components'
-import { serviceUrl } from '@constants'
-import FoodTable from './Table-FoodSet'
+import UserManagementTable from './Table-UserManagement'
 import ModalAddEdit from './Modal-Edit'
 
-const FoodSet = () => {
+const UserManagement = () => {
     const searchKey = useRef('')
-    const merchantID = useMappedState($$state => $$state.user.userID)
-    const [FoodList, setFoodList] = useState([])
-    const [currentFood, setCurrentFood] = useState({}) // 当前选中的
+    const [UserList, setUserList] = useState([])
     const [editModalVisiable, setEditModalVisiable] = useState(false)
     const [current, setCurrent] = useState(1)
     const [size, setSize] = useState(20)
     const [total, setTotal] = useState(0)
-
+    const [currentUser, setCurrentUser] = useState({})
 
     const searchKeyChange = (v) => {
         searchKey.current = v
     }
 
-    const saveFood = (values) => {
-        let api = serviceUrl.foodAdd
-        let params = values
-
-        if (currentFood.foodID) {
-            api = serviceUrl.foodUpdate
-            params = { ...values, foodID: currentFood.foodID }
-        }
-
+    const saveUser = (values) => {
         axiosFetch({
-            api,
-            params,
-        }).then((res) => {
-            message.success('菜品更新成功')
+            api: '/user/update',
+            params: { userID: currentUser, ...values },
+        }).then(() => {
+            message.success('用户更新成功')
+            setCurrentUser({})
+            queryUserList()
             setEditModalVisiable(false)
-            setCurrentFood({})
-            queryFoodList()
+
+        }).catch(() => {
+            setEditModalVisiable(false)
         })
     }
 
     const editRecord = (record) => {
-        setCurrentFood(record)
+        setCurrentUser(record)
         setEditModalVisiable(true)
+    }
+
+    const auditRecord = (text, record) => {
+        Modal.confirm({
+            title: text,
+            content: `是否确定要${text}？`,
+            icon: <Icon name="ExclamationCircleOutlined" />,
+            onOk: () => {
+                console.log(record)
+                axiosFetch({
+                    api: '/user/update',
+                    params: { userID: record.userID ,isActive: text === '启用' ? 1 : 2 },
+                }).then(() => {
+                    queryUserList()
+                })
+            }
+        })
     }
 
     const deleteRecord = (record) => {
         Modal.confirm({
             title: '删除',
-            content: '是否确定要删除菜品？',
+            content: '是否确定要删除用户？',
             icon: <Icon name="ExclamationCircleOutlined" />,
             onOk: () => {
                 axiosFetch({
-                    api: serviceUrl.foodDelete,
-                    params: { foodID: record.foodID },
+                    api: '/user/delete',
+                    params: { userID: record.userID },
                 }).then(() => {
-                    queryFoodList()
+                    queryUserList()
                 })
             }
         })
@@ -66,26 +74,25 @@ const FoodSet = () => {
     const updatePage = (current, pageSize) => {
         setCurrent(current)
         setSize(pageSize)
-        queryFoodList(current, pageSize)
+        queryUserList(current, pageSize)
     }
 
     const search = () => {
-        queryFoodList(1)
+        queryUserList(1)
         setCurrent(1)
     }
 
-    const queryFoodList = ($current = current, $size = size) => {
-        const fname = searchKey.current.trim() ? searchKey.current : undefined
+    const queryUserList = ($current = current, $size = size) => {
+        const uname = searchKey.current.trim() ? searchKey.current : undefined
         axiosFetch({
-            api: serviceUrl.foodSelect,
+            api: 'user/select',
             params: {
-                merchantID,
-                foodName: fname,
+                userName: uname,
                 pageNo: $current,
                 pageSize: $size,
             },
         }).then((res) => {
-            setFoodList(res.records)
+            setUserList(res.records)
             setTotal(res.total)
         })
     }
@@ -99,19 +106,14 @@ const FoodSet = () => {
             <Col span={24} className="layoutsHeader">
                 <div className="layoutsTool">
                     <div className="layoutsToolLeft">
-                        <h1>菜品管理</h1>
-                    </div>
-                    <div className="layoutsToolRight">
-                        <Space>
-                            <Button onClick={() => { setEditModalVisiable(true) }} type="primary">新增菜品</Button>
-                        </Space>
+                        <h1>用户管理</h1>
                     </div>
                 </div>
                 <div className="layoutsLine"></div>
                 <div className="layoutsSearch">
                     <Space>
                         <Input
-                            placeholder="请输入菜品名称"
+                            placeholder="请输入用户名称"
                             style={{ width: '160px' }}
                             type="text"
                             onChange={(e) => { searchKeyChange(e.target.value) }}
@@ -123,12 +125,13 @@ const FoodSet = () => {
             <Col span={24} className="layoutsLineBlock"></Col>
             <Col span={24}></Col>
             <Col span={24} className="layoutsContent">
-                <FoodTable
+                <UserManagementTable
                     current={current}
                     size={size}
                     total={total}
-                    dataSource={FoodList}
+                    dataSource={UserList}
                     editRecord={editRecord}
+                    auditRecord={auditRecord}
                     deleteRecord={deleteRecord}
                     updatePage={updatePage}
                 />
@@ -136,12 +139,10 @@ const FoodSet = () => {
             {
                 editModalVisiable && (
                     <ModalAddEdit
-                        title={currentFood.foodID ? '编辑菜品' : '新增菜品'}
-                        currentFood={currentFood}
-                        saveFood={saveFood}
-                        searchList={queryFoodList}
+                        currentUser={currentUser}
+                        saveUser={saveUser}
                         handleCancel={() => {
-                            setCurrentFood({})
+                            setCurrentUser({})
                             setEditModalVisiable(false)
                         }}
                     />
@@ -151,4 +152,4 @@ const FoodSet = () => {
     )
 }
 
-export default FoodSet
+export default UserManagement

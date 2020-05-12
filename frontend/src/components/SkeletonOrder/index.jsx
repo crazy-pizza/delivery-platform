@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams, withRouter, Switch, Route } from "react-router-dom"
 import { Layout, Row, Col } from 'antd'
-// import { getOrderEntry } from '@utils'
 import { Icon } from '@components'
 import Order from './Order'
 import Bill from './Bill'

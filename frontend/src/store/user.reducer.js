@@ -2,6 +2,7 @@ const initialState = {
     userName: null,
     userID: null,
     currentShopUserID: null,
+    role: null,
 }
 
 const reducer = ($$state = initialState, action) => {

@@ -15,7 +15,7 @@ const MyOrder = () => {
     const [visible, setVisible] = useState(false)
     const [currentBillDetail, setCurrentBillDetail] = useState([])
 
-    const userID = useMappedState($$state => $$state.user.userID)
+    const merchantID = useMappedState($$state => $$state.user.userID)
 
     const searchKeyChange = (v) => {
         searchKey.current = v
@@ -64,7 +64,7 @@ const MyOrder = () => {
         axiosFetch({
             api: serviceUrl.orderHistoryOrder,
             params: {
-                merchantID: userID,
+                merchantID,
                 foodName: orderNo,
                 pageNo: $current,
                 pageSize: $size,
@@ -76,7 +76,7 @@ const MyOrder = () => {
     }
 
     useEffect(() => {
-        setTimeout(() => { search() }, 1000)
+        search()
     }, [])
 
     return (
