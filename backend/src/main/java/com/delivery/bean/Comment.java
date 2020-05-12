@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 @ApiModel("订单评价")
 @TableName("comment")
@@ -41,6 +43,10 @@ public class Comment extends Page {
     private String content;
 
     @ApiModelProperty("评论星级")
-    private Integer star;
+    private BigDecimal star;
+
+    @ApiModelProperty("评论人")
+    @TableField(exist = false)
+    private User user;
 
 }

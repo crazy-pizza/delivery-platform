@@ -13,6 +13,7 @@ import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.CommentService;
 import com.delivery.service.OrderService;
+import com.delivery.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class CommentController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
 
 
 
@@ -60,12 +64,15 @@ public class CommentController {
     @ApiOperation("店铺评论列表")
     @PostMapping("/list")
     public Result<IPage<Comment>> list(@RequestBody Comment comment) {
-        Assert.notNull(comment.getOrderID());
         Page<Comment> page = new Page<>(comment.getPageNo(), comment.getPageSize());
         LambdaQueryWrapper<Comment> query = new LambdaQueryWrapper<Comment>()
                 .eq(Comment::getMerchantID, comment.getMerchantID()).orderByDesc(Comment::getCreateTime);
         Optional.ofNullable(comment.getStar()).ifPresent(star -> query.eq(Comment::getStar, star));
         IPage<Comment> pageList = commentService.page(page, query);
+        for(Comment detail : pageList.getRecords()) {
+            User user = userService.getById(detail.getUserID());
+            detail.setUser(user);
+        }
         return Result.success(pageList);
     }
 
