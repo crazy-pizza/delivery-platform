@@ -78,6 +78,7 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
             detail.setFoodDesc(food.getFoodDesc());
             detail.setFoodName(food.getFoodName());
             detail.setFoodPrice(food.getFoodPrice());
+            detail.setFoodImagePath(food.getImagePath());
             orderDetailMapper.insert(detail);
         }
 

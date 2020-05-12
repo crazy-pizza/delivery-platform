@@ -48,9 +48,12 @@ public class OrderDetail {
     @TableField("foodDesc")
     private String foodDesc;
 
-
     @TableField("foodPrice")
     @ApiModelProperty("菜品价格")
     private BigDecimal foodPrice;
+
+    @TableField("foodImagePath")
+    @ApiModelProperty("菜品图片")
+    private String foodImagePath;
 
 }
