@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.delivery.bean.*;
@@ -13,6 +14,7 @@ import com.delivery.mapper.FoodMapper;
 import com.delivery.mapper.OrderDetailMapper;
 import com.delivery.mapper.OrderMapper;
 import com.google.common.base.Preconditions;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,10 +60,10 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         List<Food> foodList = foodMapper.selectBatchIds(foodIDList);
         Long merchantID = foodList.get(0).getMerchantID();
         User merchant = userService.getById(merchantID);
-        Assert.notNull(merchant.getAddress() ,"商家%s没设置商家地址，此商家不能下单", merchant.getAddress());
+        Preconditions.checkArgument(StrUtil.isNotEmpty(merchant.getAddress()),"商家%s没设置商家地址，此商家不能下单", merchant.getAddress());
         order.setMerchantAddress(merchant.getAddress());
         User user = userService.getById(UserHolder.getUser().getUserID());
-        Assert.notNull(user.getAddress() ,"您还没有设置收货地址，不能下单");
+        Preconditions.checkArgument(StrUtil.isNotEmpty(user.getAddress()),"您还没有设置收货地址，不能下单");
         order.setUserAddress(user.getAddress());
         Map<Long, Food> foodMap = foodList.stream().collect(Collectors.toMap(Food::getFoodID, Function.identity()));
         //计算订单总价格
