@@ -37,4 +37,6 @@ public class OrderReport {
     @ApiModelProperty("时间")
     private Long time;
 
+
+
 }
