@@ -39,7 +39,6 @@ public class OrderDetail {
     @TableField("foodNum")
     private Long foodNum;
 
-
     @TableField("foodName")
     @ApiModelProperty("菜品名称")
     private String foodName;
