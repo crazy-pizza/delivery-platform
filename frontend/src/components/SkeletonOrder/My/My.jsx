@@ -27,7 +27,6 @@ export const My = (props) => {
     return (
         <ul className={styles.ulContainer}>
             <UploadAvatar />
-
             <li>我的收藏</li>
             <li>我的地址</li>
             <li>我的积分</li>
