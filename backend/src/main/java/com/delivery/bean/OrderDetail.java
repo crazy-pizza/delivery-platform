@@ -55,4 +55,5 @@ public class OrderDetail {
     @ApiModelProperty("菜品图片")
     private String foodImagePath;
 
+
 }
