@@ -41,4 +41,6 @@ public class Food extends Page {
     @TableField("merchantID")
     @ApiModelProperty("商家ID")
     private Long merchantID;
+
+
 }
