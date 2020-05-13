@@ -9,25 +9,37 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img)
 }
 
-function beforeUpload(file) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-  if (!isJpgOrPng) {
-    message.error('你只能上传JPG/PNG类型的图片!')
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2
-  if (!isLt2M) {
-    message.error('图片文件最大不能超过 2MB!')
-  }
-  return isJpgOrPng && isLt2M
-}
+// function beforeUpload(file) {
+//   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+//   if (!isJpgOrPng) {
+//     message.error('你只能上传JPG/PNG类型的图片!')
+//   }
+//   const isLt2M = file.size / 1024 / 1024 < 2
+//   if (!isLt2M) {
+//     message.error('图片文件最大不能超过 2MB!')
+//   }
+//   return isJpgOrPng && isLt2M
+// }
 
 const UploadPic = ({ food = {}, callback }) => {
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState()
 
   const handleChange = info => {
+    const originFile = info.file.originFileObj
+    const isJpgOrPng = originFile.type === 'image/jpeg' || originFile.type === 'image/png'
+    if (!isJpgOrPng) {
+      message.error('你只能上传JPG/PNG类型的图片!')
+      return
+    }
+    const isLt2M = originFile.size / 1024 / 1024 < 2
+    if (!isLt2M) {
+      message.error('图片文件最大不能超过 2MB!')
+      return
+    }
+
     const formData = new FormData()
-    formData.append('file', info.file.originFileObj)
+    formData.append('file', originFile)
 
     setLoading(true)
     axiosFetch({
@@ -40,14 +52,14 @@ const UploadPic = ({ food = {}, callback }) => {
           params: { foodID: food.foodID, imagePath: imgurl },
         }).then(() => {
           message.success('修改成功')
-          getBase64(info.file.originFileObj, imageUrl => {
+          getBase64(originFile, imageUrl => {
             setLoading(false)
             setImageUrl(imageUrl)
           })
           callback && callback()
         }).catch(() => { setLoading(false) })
       } else {
-        getBase64(info.file.originFileObj, imageUrl => {
+        getBase64(originFile, imageUrl => {
           setLoading(false)
           setImageUrl(imageUrl)
         })
@@ -71,7 +83,7 @@ const UploadPic = ({ food = {}, callback }) => {
   }
 
   return (
-    <div style={{width: '104px', margin: '0 auto'}}>
+    <div style={{ width: '104px', margin: '0 auto' }}>
       <Upload
         name="file"
         // fileList={[]}
@@ -79,8 +91,8 @@ const UploadPic = ({ food = {}, callback }) => {
         className="avatar-uploader"
         showUploadList={false}
         // action="/file/upload"
-        customRequest={() => {}}
-        beforeUpload={beforeUpload}
+        customRequest={() => { }}
+        // beforeUpload={beforeUpload}
         onChange={handleChange}
       >
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton()}
