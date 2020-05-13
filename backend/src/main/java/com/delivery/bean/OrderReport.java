@@ -38,5 +38,4 @@ public class OrderReport {
     private Long time;
 
 
-
 }
