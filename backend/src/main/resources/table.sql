@@ -116,4 +116,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+INSERT INTO `user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 1, '', 1, '', '', '');
+
 SET FOREIGN_KEY_CHECKS = 1;
