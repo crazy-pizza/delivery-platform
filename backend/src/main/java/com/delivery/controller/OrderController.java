@@ -10,7 +10,9 @@ import com.delivery.component.UserHolder;
 import com.delivery.service.FoodService;
 import com.delivery.service.OrderDetailService;
 import com.delivery.service.OrderService;
+import com.delivery.service.UserService;
 import com.google.common.base.Preconditions;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class OrderController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private UserService userService;
 
 
 
@@ -76,6 +81,10 @@ public class OrderController {
         Optional.ofNullable(order.getUserID()).ifPresent(userID -> query.eq(Order::getUserID, userID));
         Optional.ofNullable(order.getMerchantID()).ifPresent(merchantID -> query.eq(Order::getMerchantID, merchantID));
         IPage<Order> pageList = orderService.page(page, query);
+        for(Order data : pageList.getRecords()) {
+            User merchant = userService.getById(data.getMerchantID());
+            data.setMerchantName(merchant.getShopName());
+        }
         return Result.success(pageList);
     }
 

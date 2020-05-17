@@ -54,6 +54,11 @@ const BillTable = ({
                     }
                 </Space>
             ),
+        },{
+            title: '商家名称',
+            dataIndex: 'merchantName',
+            width: 160,
+            ellipsis: true,
         }, {
             title: '订单号',
             dataIndex: 'orderNo',

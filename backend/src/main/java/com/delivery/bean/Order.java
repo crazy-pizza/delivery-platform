@@ -59,4 +59,8 @@ public class Order extends Page {
     @ApiModelProperty("商家地址")
     @TableField("merchantAddress")
     private String merchantAddress;
+
+    @ApiModelProperty("商家名称")
+    @TableField(exist = false)
+    private String merchantName;
 }
