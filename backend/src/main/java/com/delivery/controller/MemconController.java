@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -80,7 +77,10 @@ public class MemconController {
                 .select(Memcon::getFrom).groupBy(Memcon::getFrom);
         List<Memcon> list = memconService.list(query);
         List<String> userIDList = list.stream().map(Memcon::getFrom).map(String::valueOf).collect(Collectors.toList());
-        Collection<User> users = userService.listByIds(userIDList);
+        Collection<User> users = Collections.EMPTY_LIST;
+        if(userIDList.size() > 0) {
+            users = userService.listByIds(userIDList);
+        }
         return Result.success(users);
     }
 
