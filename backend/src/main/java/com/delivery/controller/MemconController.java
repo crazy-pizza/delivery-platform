@@ -45,7 +45,6 @@ public class MemconController {
         memcon.setCreateTime(Long.valueOf(currentTime));
         memcon.generateSessionKey();
         memconService.save(memcon);
-        //TODO websocket
         return Result.success();
     }
 
