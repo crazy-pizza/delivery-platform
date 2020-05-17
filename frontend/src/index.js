@@ -1,16 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { StoreContext } from 'redux-react-hook'
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter,HashRouter } from "react-router-dom"
 import { initStore } from '@store'
 import App from './App'
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <StoreContext.Provider value={initStore()}>
       <App />
     </StoreContext.Provider>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById('root')
 )
 
