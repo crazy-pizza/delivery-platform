@@ -70,7 +70,8 @@ public class MemconController {
     @PostMapping("/whoCallMe")
     public Result<List<Memcon>> whoCallMe() {
         User user = UserHolder.getUser();
-        LambdaQueryWrapper<Memcon> query = new LambdaQueryWrapper<Memcon>().eq(Memcon::getTo,user.getUserID()).groupBy(Memcon::getFrom);
+        LambdaQueryWrapper<Memcon> query = new LambdaQueryWrapper<Memcon>()
+                .eq(Memcon::getTo,user.getUserID()).select(Memcon::getFrom).groupBy(Memcon::getFrom);
         List<Memcon> list = memconService.list(query);
         return Result.success(list);
     }
