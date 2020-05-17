@@ -118,5 +118,5 @@ export const axiosFetch = (options) => {
 
 export const getSrc = (filename) => {
     if (!filename) return ''
-    return `http://wcpay.ictry.com:5050/file/download?fileName=${filename}`
+    return `/file/download?fileName=${filename}`
 }
