@@ -20,9 +20,11 @@ public class Memcon extends Page {
     @TableId("memconID")
     private Long memconID;
 
+    @TableField("`from`")
     @ApiModelProperty("来源")
     private Long from;
 
+    @TableField("`to`")
     @ApiModelProperty("谈话人")
     private Long to;
 

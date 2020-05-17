@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+
 @RestController
 @Api(tags = "会话管理")
 @RequestMapping("/memcon")
@@ -65,5 +66,14 @@ public class MemconController {
         return Result.success(pageList);
     }
 
+
+    @ApiOperation("我的会话")
+    @PostMapping("/whoCallMe")
+    public Result<List<Memcon>> whoCallMe() {
+        User user = UserHolder.getUser();
+        LambdaQueryWrapper<Memcon> query = new LambdaQueryWrapper<Memcon>().eq(Memcon::getTo,user.getUserID()).groupBy(Memcon::getFrom);
+        List<Memcon> list = memconService.list(query);
+        return Result.success(list);
+    }
 
 }
