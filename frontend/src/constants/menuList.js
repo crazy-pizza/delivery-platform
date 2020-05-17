@@ -22,22 +22,34 @@ const menuListData = [
         }]
     },
     {
+        title: '会话管理',
+        entryCode: '3',
+        icon: 'MessageOutlined',
+        items: [{
+            title: '会话列表',
+            entryCode: '3-1',
+            component: 'MessageManagement',
+            role: '2'
+        }]
+    },
+    {
         title: '店铺管理',
         icon: 'ShopOutlined',
+        entryCode: '4',
         items: [{
             title: '店铺设置',
-            entryCode: '3-1',
+            entryCode: '4-1',
             component: 'ShopSet',
             role: '2'
         }]
     },
     {
         title: '用户信息',
-        entryCode: '4',
+        entryCode: '5',
         icon: 'UsergroupDeleteOutlined',
         items: [{
             title: '用户管理',
-            entryCode: '4-1',
+            entryCode: '5-1',
             component: 'UserManagement',
             role: '1'
         }]

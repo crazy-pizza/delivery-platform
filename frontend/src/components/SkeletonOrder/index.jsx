@@ -1,28 +1,38 @@
 import React, { useEffect } from 'react'
 import { useParams, withRouter, Switch, Route } from "react-router-dom"
-import { Layout, Row, Col } from 'antd'
+import { Layout, Menu } from 'antd'
+import { Link } from "react-router-dom"
 import { Icon } from '@components'
 import Order from './Order'
 import Bill from './Bill'
 import My from './My'
 import ShopFoodDetail from './ShopFoodDetail'
-import styles from './skeletonOrder.module.css'
 
-const { Header, Footer, Content } = Layout
+const { Header, Content, Sider } = Layout
 
 const SkeletonOrder = (props) => {
     const { code } = useParams()
-
+    // const [collapsed, setCollapsed] = useState(false)
     useEffect(() => {
         
     }, [code])
 
-    const jumpRouter = (route) => {
-        props.history.replace(`/order/${route}`)
-    }
-
     return (
         <Layout style={{ height: '100%' }}>
+            <Sider>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu.Item key="1" icon={<Icon name="ThunderboltOutlined" />}>
+                    <Link to={`/order/order`}>我要订餐</Link>
+                </Menu.Item>
+                <Menu.Item key="2" icon={<Icon name="FileTextOutlined" />}>
+                    <Link to={`/order/bill`}>查看订单</Link>
+                </Menu.Item>
+                <Menu.Item key="3" icon={<Icon name="UserOutlined" />}>
+                    <Link to={`/order/my`}>我的设置</Link>
+                </Menu.Item>
+            </Menu>
+            </Sider>
             <Content style={{ overflowY: 'scroll' }}>
                 <Header></Header>
                 <Switch>
@@ -40,29 +50,6 @@ const SkeletonOrder = (props) => {
                     </Route>
                 </Switch>
             </Content>
-            <Footer style={{ padding: '5px' }}>
-                <Row className={styles.rowNav}>
-                    <Col className={styles.colNav} span={8}>
-                        <dl onClick={() => { jumpRouter('order') }} className={styles.dlNav}>
-                            <dt><Icon name="ThunderboltOutlined" /></dt>
-                            <dd>订餐</dd>
-                        </dl>
-                    </Col>
-                    <Col className={styles.colNav} span={8}>
-                        <dl onClick={() => { jumpRouter('bill') }} className={styles.dlNav}>
-                            <dt><Icon name="FileTextOutlined" /></dt>
-                            <dd>订单</dd>
-                        </dl>
-                        
-                    </Col>
-                    <Col className={styles.colNav} span={8}>
-                        <dl onClick={() => { jumpRouter('my') }} className={styles.dlNav}>
-                            <dt><Icon name="UserOutlined" /></dt>
-                            <dd>我的</dd>
-                        </dl>
-                    </Col>
-                </Row>
-            </Footer>
         </Layout>
     )
 }

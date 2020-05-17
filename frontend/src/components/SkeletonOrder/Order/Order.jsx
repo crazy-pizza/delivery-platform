@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'redux-react-hook'
 import { withRouter } from "react-router-dom"
 import moment from 'moment'
-import { List, Avatar, Button, Card, Row, Col, Modal, Comment, Tooltip, Rate } from 'antd'
+import { List, Avatar, Button, Card, Row, Col, Modal, Comment, Tooltip, Rate, TextArea, Form } from 'antd'
 import { throttle } from 'lodash'
 import { axiosFetch, getSrc } from '@utils'
 import { serviceUrl } from '@constants'
+import { Icon } from '@components'
+import Talk from './Talk'
 
 export const Order = (props) => {
     const [dataSource, setDataSource] = useState([])
     const [modalVisible, setModalVisible] = useState(false)
     const [commentData, setCommentData] = useState([])
+    const [tableVisible, setTalkVisible] = useState(false)
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -32,7 +35,7 @@ export const Order = (props) => {
         props.history.replace(`/order/detail`)
     }
 
-    const lookCommit = throttle((id, index) => {
+    const lookCommit = throttle((id) => {
         axiosFetch({
             api: '/comment/list',
             params: { merchantID: id, pageSize: '500', pageNo: '1' },
@@ -42,11 +45,21 @@ export const Order = (props) => {
         })
     }, 1000, { trailing: false })
 
+    const callShop = (id) => {
+        dispatch({
+            type: 'setUserInfo',
+            payload: {
+                currentShopUserID: id
+            },
+        })
+        setTalkVisible(true)
+    }
+
     return (
         <Row>
             {
                 dataSource.map((item, index) => (
-                    <Col key={item.userID} style={{ margin: '20px 10px' }} flex={'400px'}>
+                    <Col key={item.userID} style={{ margin: '20px 10px' }} flex={'350px'}>
                         <Card
                             onClick={() => { jumpShop(item.userID) }}
                             title={item.shopName || '未命名'}
@@ -56,9 +69,15 @@ export const Order = (props) => {
 
                                     </div>
                                     :
-                                    <Button onClick={(e) => { e.stopPropagation(); lookCommit(item.userID, index) }} type="link" block>
-                                        查看评价
-                                </Button>
+                                    <Button
+                                        onClick={(e) => { e.stopPropagation(); lookCommit(item.userID) }}
+                                        type="link"
+                                        block
+                                    >查看评价</Button>,
+                                    <Button
+                                        onClick={(e) => { e.stopPropagation(); callShop(item.userID) }}
+                                        icon={<Icon name="CommentOutlined" />}
+                                    >联系店家</Button>
                             ]}
                         >
                             <List.Item.Meta
@@ -121,6 +140,11 @@ export const Order = (props) => {
                     </Modal>
                 )
             }
+
+            {
+                tableVisible && <Talk onCancel={() => { setTalkVisible(false) }}/>
+            }
+
         </Row>
     )
 }
