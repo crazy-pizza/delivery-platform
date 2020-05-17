@@ -76,7 +76,8 @@ public class MemconController {
     public Result<Collection<User>> whoCallMe() {
         User user = UserHolder.getUser();
         LambdaQueryWrapper<Memcon> query = new LambdaQueryWrapper<Memcon>()
-                .eq(Memcon::getTo,user.getUserID()).select(Memcon::getFrom).groupBy(Memcon::getFrom);
+                .eq(Memcon::getTo,user.getUserID()).or().eq(Memcon::getFrom,user.getUserID())
+                .select(Memcon::getFrom).groupBy(Memcon::getFrom);
         List<Memcon> list = memconService.list(query);
         List<String> userIDList = list.stream().map(Memcon::getFrom).map(String::valueOf).collect(Collectors.toList());
         Collection<User> users = userService.listByIds(userIDList);
