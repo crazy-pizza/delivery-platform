@@ -29,6 +29,11 @@ const BillDetail = ({
             width: 100,
             ellipsis: true,
         }, {
+            title: '菜品数量',
+            dataIndex: 'foodNum',
+            width: 100,
+            ellipsis: true,
+        }, {
             title: '菜品图片',
             dataIndex: 'imagePath',
             render: (text) => (

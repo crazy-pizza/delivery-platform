@@ -1,0 +1,41 @@
+.talkcontainer{
+    overflow-y: auto;
+    min-height: 200px;
+    max-height: 300px;
+    background: #efefef;
+}
+
+.metalk{
+    padding: 4px;
+}
+
+.momentText{
+    font-size: 12px;
+}
+.contentContainer {
+    margin-top: 4px;
+}
+.metalk div{
+    text-align: left;
+    overflow: hidden;
+}
+.metalk div span {
+    float: right;
+    background: rgb(135, 208, 104);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+.shoptalk{
+    padding: 4px;
+}
+.shoptalk div span {
+    background: rgb(90, 161, 243);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+
+.shoptalk {
+
+}

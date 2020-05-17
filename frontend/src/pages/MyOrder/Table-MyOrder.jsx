@@ -60,7 +60,12 @@ const OrderTable = ({
         }, {
             title: '订单备注',
             dataIndex: 'remark',
-        }, 
+            width: 180,
+            ellipsis: true,
+        }, {
+            title: '订单地址',
+            dataIndex: 'userAddress',
+        }
     ]
 
     const pageSizeChange = (current, size) => {
@@ -73,7 +78,7 @@ const OrderTable = ({
 
     return (
         <div>
-            <div style={{ width: '940px' }}>
+            <div style={{ width: '1000px' }}>
                 <SCAntdTable
                     rowKey="orderID"
                     scroll={{ x: 870, y: 260 }}

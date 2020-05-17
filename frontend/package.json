@@ -44,5 +44,5 @@
     "customize-cra": "^0.9.1",
     "react-app-rewired": "^2.1.5"
   },
-  "proxy": "http://172.16.42.100:7000"
+  "proxy": "http://wcpay.ictry.com:5050/"
 }

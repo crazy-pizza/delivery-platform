@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 import { useMappedState, useDispatch } from 'redux-react-hook'
 import { axiosFetch } from '@utils'
 import { UploadAvatar } from '@components'
@@ -16,6 +16,7 @@ const ShopSet  = () => {
                 api: '/user/update',
                 params: { userID: userInfo.userID, ...data },
             }).then((res) => {
+                message.success('保存成功')
                 dispatch({
                     type: 'setUserInfo',
                     payload: { ...res },
