@@ -4,7 +4,7 @@
 
 
     <select id="report" parameterType="com.delivery.bean.OrderReport" resultType="com.delivery.bean.OrderReport">
-        SELECT d.foodID, sum(d.foodNum) as sumNum, SUBSTR(o.createTime/1000, 0, #{timeDigit}) as `time`
+        SELECT d.foodID, sum(d.foodNum) as sumNum, SUBSTR(o.createTime, 1, #{timeDigit}) as `time`
         FROM `order` o
         LEFT JOIN order_detail d
         ON o.orderID = d.orderID
@@ -16,7 +16,7 @@
         <if test="endTime != null and endTime != '' ">
             AND o.createTime <![CDATA[<=]]> #{endTime}
         </if>
-        GROUP BY SUBSTR(o.createTime/1000, 0, #{timeDigit}), d.foodID
+        GROUP BY SUBSTR(o.createTime, 1, #{timeDigit}), d.foodID
     </select>
 
 </mapper>   
