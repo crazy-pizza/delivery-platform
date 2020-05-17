@@ -19,6 +19,11 @@ const menuListData = [
             entryCode: '2-1',
             component: 'MyOrder',
             role: '2'
+        }, {
+            title: '订单报表',
+            entryCode: '2-2',
+            component: 'OrderReport',
+            role: '2'
         }]
     },
     {

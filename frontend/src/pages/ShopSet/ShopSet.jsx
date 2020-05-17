@@ -19,7 +19,7 @@ const ShopSet  = () => {
                 message.success('保存成功')
                 dispatch({
                     type: 'setUserInfo',
-                    payload: { ...res },
+                    payload: { ...data },
                 })
             })
         }).catch(err => {})
@@ -61,6 +61,13 @@ const ShopSet  = () => {
                 rules={[{required: true, message: '请输入店铺描述' }]}
             >
                 <Input placeholder="请输入店铺描述" />
+            </Form.Item>
+            <Form.Item
+                label="店铺地址"
+                name='address'
+                rules={[{required: true, message: '请输入店铺地址' }]}
+            >
+                <Input placeholder="请输入店铺地址" />
             </Form.Item>
             <div style={{ textAlign: 'center' }} >
                 <Button size="large" key="submit" type="primary" onClick={onSubmit}>保存</Button>

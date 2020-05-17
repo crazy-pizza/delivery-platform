@@ -94,6 +94,7 @@ export const Order = (props) => {
                                     </div>
                                 }
                             />
+                            <Card.Meta style={{ paddingTop: '10px', textAlign: 'right' }}description={`地址：${item.address || "暂无"}`} />
                         </Card>
                     </Col>
                 ))
