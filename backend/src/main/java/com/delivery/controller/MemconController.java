@@ -11,6 +11,7 @@ import com.delivery.bean.User;
 import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.MemconService;
+import com.delivery.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,9 @@ public class MemconController {
 
     @Autowired
     private MemconService memconService;
+
+    @Autowired
+    private UserService userService;
 
 
     @ApiOperation("谈话")
@@ -68,12 +73,14 @@ public class MemconController {
 
     @ApiOperation("我的会话")
     @PostMapping("/whoCallMe")
-    public Result<List<Memcon>> whoCallMe() {
+    public Result<Collection<User>> whoCallMe() {
         User user = UserHolder.getUser();
         LambdaQueryWrapper<Memcon> query = new LambdaQueryWrapper<Memcon>()
                 .eq(Memcon::getTo,user.getUserID()).select(Memcon::getFrom).groupBy(Memcon::getFrom);
         List<Memcon> list = memconService.list(query);
-        return Result.success(list);
+        List<String> userIDList = list.stream().map(Memcon::getFrom).map(String::valueOf).collect(Collectors.toList());
+        Collection<User> users = userService.listByIds(userIDList);
+        return Result.success(users);
     }
 
 }
