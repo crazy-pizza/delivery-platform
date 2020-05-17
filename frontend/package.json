@@ -2,7 +2,7 @@
   "name": "platform-scf",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "/",
   "dependencies": {
     "@ant-design/icons": "^4.0.5",
     "antd": "^4.1.1",

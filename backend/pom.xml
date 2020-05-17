@@ -96,7 +96,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.hualala.Application</mainClass>
+                    <mainClass>com.delivery.Application</mainClass>
                 </configuration>
             </plugin>
             <!-- compiler -->
