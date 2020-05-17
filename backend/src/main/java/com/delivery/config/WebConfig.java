@@ -30,6 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/**/*.js")
                 .excludePathPatterns("/**/*.png")
                 .excludePathPatterns("/**/*.ico")
+                .excludePathPatterns("/**/*.json")
                 .excludePathPatterns("/webjars/**");
 
     }
