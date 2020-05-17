@@ -4,12 +4,10 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.delivery.bean.Order;
-import com.delivery.bean.OrderDetail;
-import com.delivery.bean.OrderReport;
-import com.delivery.bean.User;
+import com.delivery.bean.*;
 import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
+import com.delivery.service.FoodService;
 import com.delivery.service.OrderDetailService;
 import com.delivery.service.OrderService;
 import com.google.common.base.Preconditions;
@@ -35,6 +33,9 @@ public class OrderController {
 
     @Autowired
     private OrderDetailService orderDetailService;
+
+    @Autowired
+    private FoodService foodService;
 
 
 
@@ -96,6 +97,10 @@ public class OrderController {
         Assert.notNull(orderReport.getMerchantID());
         Assert.notNull(orderReport.getTimeDigit());
         List<OrderReport> list = orderService.report(orderReport);
+        for (OrderReport report : list) {
+            Food food = foodService.getById(report.getFoodID());
+            report.setFood(food);
+        }
         return Result.success(list);
     }
 

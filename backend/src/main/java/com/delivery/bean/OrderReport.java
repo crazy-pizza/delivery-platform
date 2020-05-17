@@ -37,5 +37,8 @@ public class OrderReport {
     @ApiModelProperty("时间")
     private Long time;
 
+    @ApiModelProperty("菜品")
+    private Food food;
+
 
 }
