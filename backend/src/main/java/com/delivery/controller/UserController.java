@@ -70,6 +70,7 @@ public class UserController {
         Page<User> page = new Page<>(user.getPageNo(), user.getPageSize());
         LambdaQueryWrapper<User> query = new LambdaQueryWrapper<User>();
         Optional.ofNullable(user.getRole()).ifPresent(role -> query.eq(User::getRole, role));
+        Optional.ofNullable(user.getUserName()).ifPresent(username -> query.like(User::getUserName, "%" + username + "%"));
         Optional.ofNullable(user.getUserID()).ifPresent(userID -> query.eq(User::getUserID, userID));
         IPage<User> pageList = userService.page(page, query);
         return Result.success(pageList);
