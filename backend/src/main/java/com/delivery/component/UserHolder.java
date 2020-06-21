@@ -11,19 +11,19 @@ import com.delivery.bean.User;
  */
 public class UserHolder {
 
-    private static ThreadLocal<User> currentUser = new TransmittableThreadLocal<>();
+    private static final ThreadLocal<User> CURRENT_USER = new TransmittableThreadLocal<>();
 
 
     public static User getUser() {
-        return currentUser.get();
+        return CURRENT_USER.get();
     }
 
     public static void setUser(User user) {
-        currentUser.set(user);
+        CURRENT_USER.set(user);
     }
 
     public static void clear() {
-        currentUser.remove();
+        CURRENT_USER.remove();
     }
 
 
