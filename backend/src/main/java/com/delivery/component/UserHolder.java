@@ -1,6 +1,7 @@
 package com.delivery.component;
 
 
+import com.alibaba.ttl.TransmittableThreadLocal;
 import com.delivery.bean.User;
 
 /**
@@ -9,7 +10,8 @@ import com.delivery.bean.User;
  * @desc
  */
 public class UserHolder {
-    private static ThreadLocal<User> currentUser = new ThreadLocal();
+
+    private static ThreadLocal<User> currentUser = new TransmittableThreadLocal<>();
 
 
     public static User getUser() {
