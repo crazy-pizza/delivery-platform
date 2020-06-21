@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.*;
-import com.delivery.common.Result;
 import com.delivery.service.FoodService;
 import com.delivery.service.OrderDetailService;
 import com.delivery.service.OrderService;
@@ -44,34 +43,31 @@ public class OrderController {
 
     @ApiOperation("用户下单")
     @PostMapping("/add")
-    public Result add(@RequestBody Order order) {
+    public void add(@RequestBody Order order) {
         orderService.addOrder(order);
-        return Result.success();
     }
 
     @ApiOperation("商家发货")
     @PostMapping("/send")
-    public Result send(@RequestBody Order order) {
+    public void send(@RequestBody Order order) {
         Assert.notNull(order.getOrderID());
         orderService.send(order.getOrderID());
-        return Result.success();
     }
 
     @ApiOperation("用户确认收货")
     @PostMapping("/affirm")
-    public synchronized Result affirm(@RequestBody Order order) {
+    public synchronized void affirm(@RequestBody Order order) {
         Assert.notNull(order.getOrderID());
         Order entry = orderService.getById(order.getOrderID());
         Preconditions.checkArgument(entry.getOrderStatus() == 2 ,"订单状态不符");
         entry.setOrderStatus(3);
         orderService.updateById(entry);
-        return Result.success();
     }
 
 
     @ApiOperation("订单列表")
     @PostMapping("/orderList")
-    public Result<IPage<Order>> orderList(@RequestBody Order order) {
+    public IPage<Order> orderList(@RequestBody Order order) {
         Page<Order> page = new Page<>(order.getPageNo(), order.getPageSize());
         LambdaQueryWrapper<Order> query = new LambdaQueryWrapper<Order>().orderByDesc(Order::getCreateTime);
         Optional.ofNullable(order.getOrderNo()).ifPresent(orderNo -> query.eq(Order::getOrderNo, orderNo));
@@ -83,24 +79,24 @@ public class OrderController {
             User merchant = userService.getById(data.getMerchantID());
             data.setMerchantName(merchant.getShopName());
         }
-        return Result.success(pageList);
+        return pageList;
     }
 
 
     @ApiOperation("查看订单详情")
     @PostMapping("/showDetail")
-    public Result<List<OrderDetail>> showDetail(@RequestBody Order order) {
+    public List<OrderDetail> showDetail(@RequestBody Order order) {
         Assert.notNull(order.getOrderID());
         LambdaQueryWrapper<OrderDetail> query = new LambdaQueryWrapper<>();
         query.eq(OrderDetail::getOrderID, order.getOrderID());
         List<OrderDetail> list = orderDetailService.list(query);
-        return Result.success(list);
+        return list;
     }
 
 
     @ApiOperation("订单报表")
     @PostMapping("/report")
-    public Result<List<OrderReport>> report(@RequestBody OrderReport orderReport) {
+    public List<OrderReport> report(@RequestBody OrderReport orderReport) {
         Assert.notNull(orderReport.getMerchantID());
         Assert.notNull(orderReport.getTimeDigit());
         List<OrderReport> list = orderService.report(orderReport);
@@ -108,7 +104,7 @@ public class OrderController {
             Food food = foodService.getById(report.getFoodID());
             report.setFood(food);
         }
-        return Result.success(list);
+        return list;
     }
 
 }

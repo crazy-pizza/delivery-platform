@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Food;
 import com.delivery.bean.User;
-import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.FoodService;
 import io.swagger.annotations.Api;
@@ -30,41 +29,38 @@ public class FoodController {
 
     @ApiOperation("新建菜品")
     @PostMapping("/add")
-    public Result add(@RequestBody Food food) {
+    public void add(@RequestBody Food food) {
         User user = UserHolder.getUser();
         food.setMerchantID(user.getUserID());
         foodService.save(food);
-        return Result.success();
     }
 
     @ApiOperation("删除菜品")
     @PostMapping("/delete")
-    public Result delete(@RequestBody Food food) {
+    public void delete(@RequestBody Food food) {
         Assert.notNull(food.getFoodID());
         foodService.removeById(food.getFoodID());
-        return Result.success();
     }
 
 
     @ApiOperation("修改菜品")
     @PostMapping("/update")
-    public Result update(@RequestBody Food food) {
+    public void update(@RequestBody Food food) {
         Assert.notNull(food.getFoodID());
         foodService.updateById(food);
-        return Result.success();
     }
 
 
     @ApiOperation("查询菜品")
     @PostMapping("/select")
-    public Result<IPage<Food>> select(@RequestBody Food food) {
+    public IPage<Food> select(@RequestBody Food food) {
         Page<Food> page = new Page<>(food.getPageNo(), food.getPageSize());
         LambdaQueryWrapper<Food> query = new LambdaQueryWrapper<Food>();
         Optional.ofNullable(food.getFoodName()).ifPresent(foodName -> query.eq(Food::getFoodName, foodName));
         Optional.ofNullable(food.getFoodID()).ifPresent(foodID -> query.eq(Food::getFoodID, foodID));
         Optional.ofNullable(food.getMerchantID()).ifPresent(merchantID -> query.eq(Food::getMerchantID, merchantID));
         IPage<Food> pageList = foodService.page(page, query);
-        return Result.success(pageList);
+        return pageList;
     }
 
 

@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Comment;
 import com.delivery.bean.Order;
 import com.delivery.bean.User;
-import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.CommentService;
 import com.delivery.service.OrderService;
@@ -44,7 +43,7 @@ public class CommentController {
 
     @ApiOperation("添加评论")
     @PostMapping("/add")
-    public Result add(@RequestBody Comment comment) {
+    public void add(@RequestBody Comment comment) {
         Assert.notNull(comment.getOrderID());
         Order order = orderService.getById(comment.getOrderID());
         comment.setMerchantID(order.getMerchantID());
@@ -53,7 +52,6 @@ public class CommentController {
         String currentTime = DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN);
         comment.setCreateTime(Long.valueOf(currentTime));
         commentService.save(comment);
-        return Result.success();
     }
 
 
@@ -63,7 +61,7 @@ public class CommentController {
 
     @ApiOperation("店铺评论列表")
     @PostMapping("/list")
-    public Result<IPage<Comment>> list(@RequestBody Comment comment) {
+    public IPage<Comment> list(@RequestBody Comment comment) {
         Page<Comment> page = new Page<>(comment.getPageNo(), comment.getPageSize());
         LambdaQueryWrapper<Comment> query = new LambdaQueryWrapper<Comment>()
                 .eq(Comment::getMerchantID, comment.getMerchantID()).orderByDesc(Comment::getCreateTime);
@@ -73,7 +71,7 @@ public class CommentController {
             User user = userService.getById(detail.getUserID());
             detail.setUser(user);
         }
-        return Result.success(pageList);
+        return pageList;
     }
 
 

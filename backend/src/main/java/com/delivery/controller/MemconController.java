@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.delivery.bean.Memcon;
 import com.delivery.bean.User;
-import com.delivery.common.Result;
 import com.delivery.component.UserHolder;
 import com.delivery.service.MemconService;
 import com.delivery.service.UserService;
@@ -40,21 +39,20 @@ public class MemconController {
 
     @ApiOperation("谈话")
     @PostMapping("/talk")
-    public Result talk(@RequestBody Memcon memcon) {
+    public void talk(@RequestBody Memcon memcon) {
         User user = UserHolder.getUser();
         memcon.setFrom(user.getUserID());
         String currentTime = DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN);
         memcon.setCreateTime(Long.valueOf(currentTime));
         memcon.generateSessionKey();
         memconService.save(memcon);
-        return Result.success();
     }
 
 
 
     @ApiOperation("会话列表")
     @PostMapping("/list")
-    public Result<IPage<Memcon>> list(@RequestBody Memcon memcon) {
+    public IPage<Memcon> list(@RequestBody Memcon memcon) {
         Assert.notNull(memcon.getTo());
         Page<Memcon> page = new Page<>(memcon.getPageNo(), memcon.getPageSize());
         User user = UserHolder.getUser();
@@ -64,13 +62,13 @@ public class MemconController {
         //重新排序
         List<Memcon> memconList = pageList.getRecords().stream().sorted(Comparator.comparingLong(Memcon::getCreateTime)).collect(Collectors.toList());
         pageList.setRecords(memconList);
-        return Result.success(pageList);
+        return pageList;
     }
 
 
     @ApiOperation("我的会话")
     @PostMapping("/whoCallMe")
-    public Result<Collection<User>> whoCallMe() {
+    public Collection<User> whoCallMe() {
         User user = UserHolder.getUser();
         LambdaQueryWrapper<Memcon> query = new LambdaQueryWrapper<Memcon>()
                 .eq(Memcon::getTo,user.getUserID()).or().eq(Memcon::getFrom,user.getUserID())
@@ -81,7 +79,7 @@ public class MemconController {
         if(userIDList.size() > 0) {
             users = userService.listByIds(userIDList);
         }
-        return Result.success(users);
+        return users;
     }
 
 }

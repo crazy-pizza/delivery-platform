@@ -1,6 +1,7 @@
 package com.delivery.config;
 
 import com.delivery.component.PassportInterceptor;
+import com.delivery.component.ResponseResultInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,8 +16,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private PassportInterceptor passportInterceptor;
 
+    @Autowired
+    private ResponseResultInterceptor responseResultInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(responseResultInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/swagger-resources")
+                .excludePathPatterns("/v2/api-docs")
+                .excludePathPatterns("/v2/api-docs-ext");
         registry.addInterceptor(passportInterceptor)
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/add")
@@ -40,5 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
+
 
 }
