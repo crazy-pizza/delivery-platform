@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Modal, Button, Form, Input, InputNumber } from 'antd'
 import { UploadPic } from '@components'
 
@@ -8,7 +8,8 @@ const FOOD_DESC = '菜品描述'
 const FOOD_STOCK = '菜品库存数量'
 
 const AddEditModal  = (props) => {
-    const [thisFrom] = Form.useForm();
+    const [thisFrom] = Form.useForm()
+    const [imagePath, setImagePath] = useState('')
     const { saveFood, currentFood = {}, handleCancel, title, searchList } = props
     const onCancel = () => {
         handleCancel()
@@ -17,6 +18,7 @@ const AddEditModal  = (props) => {
     const onSubmit = (e) => {
         e.preventDefault() // 阻止默认提交
         thisFrom.validateFields().then(res => {
+            if (imagePath) { res.imagePath = imagePath }
             saveFood(res)
         }).catch(err => {})
     }
@@ -29,6 +31,7 @@ const AddEditModal  = (props) => {
             span: 17,
         }
     }
+
 
     return (
         <Modal
@@ -76,7 +79,10 @@ const AddEditModal  = (props) => {
                     <InputNumber style={{ width: '100%' }} defaultValue={0} placeholder={`请输入${FOOD_STOCK}`} />
                 </Form.Item>
 
-                <UploadPic callback={searchList} food={currentFood} />
+                <UploadPic
+                    callback={currentFood.foodID ? searchList : (url) => { setImagePath(url) }}
+                    food={currentFood}
+                />
             </Form>
         </Modal>
     )
