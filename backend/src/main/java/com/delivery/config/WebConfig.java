@@ -22,11 +22,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(responseResultInterceptor)
-                .addPathPatterns("/**")
+                .excludePathPatterns("/actuator/**")
                 .excludePathPatterns("/swagger-resources")
                 .excludePathPatterns("/v2/api-docs")
                 .excludePathPatterns("/v2/api-docs-ext");
         registry.addInterceptor(passportInterceptor)
+                .excludePathPatterns("/actuator/**")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/add")
                 .excludePathPatterns("/file/**")

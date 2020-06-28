@@ -12,6 +12,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * @author YuanChong
@@ -25,7 +26,8 @@ public class ResponseResultHanlder implements ResponseBodyAdvice {
     public boolean supports(MethodParameter methodParameter, Class aClass) {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = sra.getRequest();
-        return (boolean) request.getAttribute(Constant.RESPONSE_RESULT_ANN);
+        Object attribute = request.getAttribute(Constant.RESPONSE_RESULT_ANN);
+        return Optional.ofNullable(attribute).map(data -> (Boolean)data).orElse(false);
     }
 
     @Override

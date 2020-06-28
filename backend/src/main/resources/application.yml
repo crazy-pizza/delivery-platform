@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: delivery-platform-backend
   http:
     encoding:
       charset: utf-8
@@ -21,18 +23,19 @@ management:
     web:
       exposure:
         include: "*"
+      base-path: /actuator
+    jmx:
+      exposure:
+        include: "*"
   endpoint:
     shutdown:
       enabled: true
+  metrics:
+    export:
+      datadog:
+        application-key: ${spring.application.name}
   server:
     port: 17000
-    servlet:
-      context-path: /
-    tomcat:
-      uri-encoding: UTF-8
-    compression:
-      enabled: true
-      mimeTypes: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
 
 
 mybatis-plus:

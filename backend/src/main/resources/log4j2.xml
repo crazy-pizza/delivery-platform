@@ -11,20 +11,22 @@
 
     <Appenders>
         <!-- 输出控制台日志的配置 -->
-        <Console name="console" target="SYSTEM_OUT">
+        <Console name="Console" target="SYSTEM_OUT">
             <!-- 输出日志的格式 -->
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
+        <CatAppender name="CatAppender"/>
     </Appenders>
 
     <!-- Mixed sync/async -->
     <Loggers>
         <!--additivity="false" 代表不继承Root内的属性 子Logger只会在自己的appender里输出-->
         <logger name="com.hualala.mapper" level="debug" additivity="false">
-            <AppenderRef ref="console"/>
+            <AppenderRef ref="Console"/>
         </logger>
         <AsyncRoot level="info">
-            <AppenderRef ref="console"/>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="CatAppender" />
         </AsyncRoot>
     </Loggers>
 
